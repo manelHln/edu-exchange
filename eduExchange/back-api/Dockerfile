@@ -18,7 +18,7 @@ WORKDIR /app/back-api
 
 COPY --from=build --chown=1000:1000 /app/back-api/. .
 
-EXPOSE 8080
+EXPOSE 9898
 
 VOLUME [ "/edu-exchange-data" ]
 

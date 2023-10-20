@@ -6,10 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,18 +20,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user", schema = "keeper")
+@Table(name = "user", schema = "public")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "firstname")
-    private String firstname;
+    @Column(name = "fullname")
+    private String fullname;
 
-    @Column(name = "lastname")
-    private String lastname;
+    @Column(name = "pseudo")
+    private String pseudo;
 
 
     @Column(name = "email")
@@ -41,6 +43,10 @@ public class User implements UserDetails {
     @Enumerated
     @Column(name = "user_role")
     private UserRole userRole;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
 
 

@@ -31,21 +31,21 @@ public class AuthService {
         try {
             var user = User.builder()
                     .email(request.getEmail())
-                    .firstname(request.getFirstname())
+                    .fullname(request.getFullname())
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .lastname(request.getLastname())
-                    .userRole(UserRole.SUBSCRIBER)
+                    .pseudo(request.getPseudo())
+                    .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
                     .build();
             if (userRepository.existsByEmail(request.getEmail()))
                 throw new UserAuthenticationException("User already exists!");
             userRepository.save(user);
             var token = jwtService.generateToken(user);
             return AuthResponse.builder()
-                    .str(token)
+                    .token(token)
                     .build();
         } catch (UserAuthenticationException e) {
             return AuthResponse.builder()
-                    .str(e.getMessage())
+                    .token(e.getMessage())
                     .build();
         }
     }
@@ -61,7 +61,7 @@ public class AuthService {
                 .orElseThrow();
         var token = jwtService.generateToken(user);
         return AuthResponse.builder()
-                .str(token)
+                .token(token)
                 .build();
     }
 
@@ -70,8 +70,8 @@ public class AuthService {
         User user = userRepository.findByEmail(username).orElseThrow();
         return UserInfoResponse.builder()
                 .email(user.getEmail())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
+                .fullname(user.getFullname())
+                .pseudo(user.getPseudo())
                 .id(user.getId())
                 .build();
     }

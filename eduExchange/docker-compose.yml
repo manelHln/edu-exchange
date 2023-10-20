@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
     container_name: edu-back
     ports:
-     - "8080:8080"
+     - "9898:8080"
     depends_on:
       - database
     environment:

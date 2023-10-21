@@ -29,15 +29,15 @@ export default function Home() {
     <div>
       <LandingPageNavbar />
       <main>
-        <div className="px-40">
+        <div className="sm:px-40">
           <Banner />
         </div>
 
-        <div className="px-40">
+        <div className="sm:px-40">
           <Features />
         </div>
 
-        <div className="px-40 bg-bg-light">
+        <div className="sm:px-40 bg-bg-light">
           <SectionContainer
             title="Collaborate and <br /> share organizationnal knowledge"
             description="Our platform streamlines the exchange of knowledge, fostering innovation, and enhancing productivity across your organization."
@@ -46,20 +46,20 @@ export default function Home() {
           />
         </div>
 
-        <div className="px-40">
+        <div className="sm:px-40">
           <SectionContainer
             title="Real-time chatting <br /> between students<br /> and teachers"
             description="Enhance the educational experience with instant communication. Our app enables real-time chatting between teachers and classmates, promoting interactive discussions, quick question-and-answer sessions, and personalized support."
             button={buttonAttributes}
-            mockupImg={message_1}
+            mockupImg={message_2}
           />
         </div>
 
-        <div className="px-40 bg-bg-light">
+        <div className="sm:px-40 bg-bg-light">
           <SectionContainer
             title="Knowledge Exchange and Q&A Forums"
             description="Create custom landing pages with Rareblocks that converts more visitors than any website. With lots of unique blocks easily build a page. There are many variations of passages of available. "
-            mockupImg={message_2}
+            mockupImg={message_1}
             reversed
             counter={counterAttributtes}
           />
@@ -67,7 +67,7 @@ export default function Home() {
 
         {/* <Testimonials /> */}
 
-        <div className="px-40 ">
+        <div className="sm:px-40 ">
           <Cta />
         </div>
       </main>

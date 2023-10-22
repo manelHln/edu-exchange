@@ -2,7 +2,7 @@ package org.project.backapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.project.backapi.domain.User;
-import org.project.backapi.domain.UserRole;
+import org.project.backapi.enums.UserRole;
 import org.project.backapi.dto.AuthRequest;
 import org.project.backapi.dto.AuthResponse;
 import org.project.backapi.dto.RegisterRequest;

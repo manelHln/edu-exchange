@@ -1,0 +1,19 @@
+server.port=<port>
+server.servlet.context-path= /api/v1
+
+#datasource parameters
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+#use existing database
+spring.datasource.url= jdbc:postgresql://localhost:5432/<database>
+spring.datasource.username= <username>
+spring.datasource.password= <password>
+#default schema is public
+spring.jpa.properties.hibernate.default_schema= <schema>
+spring.session.jdbc.initialize-schema=  always
+#spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation= true
+
+#generate database
+spring.jpa.show-sql= true
+spring.jpa.generate-ddl= true
+spring.jpa.hibernate.ddl-auto= create-drop
+springdoc.api-docs.path=/api-docs

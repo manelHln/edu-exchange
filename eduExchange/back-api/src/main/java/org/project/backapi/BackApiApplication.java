@@ -1,5 +1,6 @@
 package org.project.backapi;
 
+import org.project.backapi.domain.Student;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.RegisterRequest;
 import org.project.backapi.enums.UserRole;
@@ -59,13 +60,14 @@ public class BackApiApplication {
                     .build();
             System.out.println("User token: " + service.register(teacher).getToken());
 
-            var student = RegisterRequest.builder()
+            var student =RegisterRequest.builder() //Student.builder()
                     .fullname("Student")
                     .email("student@mail.com")
                     .password("password")
                     .role(String.valueOf(EDU))
                     .pseudo("first student third  user")
                     .build();
+            //how to handle specific user request creation ?
             System.out.println("Student token: " + service.register(student).getToken());
         };
     }

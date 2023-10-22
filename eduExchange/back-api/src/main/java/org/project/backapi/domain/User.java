@@ -20,19 +20,12 @@ import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "users")
-//we use
+//chaque classe fille aura sa  table de plus user aussi est une table
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "fullname")
-    private String fullname;
-
-    @Column(name = "pseudo")
-    private String pseudo;
-
 
     @Column(name = "email")
     private String email;

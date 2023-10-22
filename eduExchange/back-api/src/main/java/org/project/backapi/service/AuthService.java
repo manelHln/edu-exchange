@@ -29,11 +29,15 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         try {
+                /*
+                basic user does't have name, pseudo
+                make changes to register student, teacher aand admin
+                */
             var user = User.builder()
                     .email(request.getEmail())
-                    .fullname(request.getFullname())
+                    //.fullname(request.getFullname())
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .pseudo(request.getPseudo())
+                    //.pseudo(request.getPseudo())
                     .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
                     .build();
             if (userRepository.existsByEmail(request.getEmail()))
@@ -68,10 +72,13 @@ public class AuthService {
     public UserInfoResponse getUserInfo(String token) {
         String username = jwtService.extractUsername(token);
         User user = userRepository.findByEmail(username).orElseThrow();
+        /*
+                make changes to get student, teacher and admin respectives info
+                */
         return UserInfoResponse.builder()
                 .email(user.getEmail())
-                .fullname(user.getFullname())
-                .pseudo(user.getPseudo())
+                //.fullname(user.getFullname())
+                //.pseudo(user.getPseudo())
                 .id(user.getId())
                 .build();
     }

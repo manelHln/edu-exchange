@@ -5,8 +5,16 @@ import lombok.*;
 
 import java.util.Set;
 @Entity(name = "edu")
-//@PrimaryKeyJoinColumn(name = "user_id")
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 public class EduUser extends User{
+    @Column(name = "fullname")
+    private String fullname;
+
+    @Column(name = "pseudo")
+    private String pseudo;
+
+
     //relations
     @OneToMany(mappedBy = "edu")
     private Set<Vote> votes;

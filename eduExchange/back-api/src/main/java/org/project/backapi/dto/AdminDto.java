@@ -1,4 +1,4 @@
 package org.project.backapi.dto;
 
-public class AdminDto {
+public class AdminDto extends UserDto {
 }

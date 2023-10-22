@@ -30,4 +30,9 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
     private Set<Topic> topics;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

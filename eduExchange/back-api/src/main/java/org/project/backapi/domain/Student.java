@@ -8,9 +8,9 @@ import lombok.ToString;
 import java.util.Set;
 
 @Entity(name = "student")
-@PrimaryKeyJoinColumn(name = "user_id")
-public class Student extends User{
-    @OneToMany(mappedBy = "edu")
+//@PrimaryKeyJoinColumn(name = "user_id")
+public class Student extends EduUser{
+    /*@OneToMany(mappedBy = "edu")
     private Set<Vote> votes;
 
     @OneToMany(mappedBy = "edu")
@@ -31,5 +31,5 @@ public class Student extends User{
 
     @OneToMany(mappedBy = "sender")
     @ToString.Exclude
-    private Set<Message> messages;
+    private Set<Message> messages;*/
 }

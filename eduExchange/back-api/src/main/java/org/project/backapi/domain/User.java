@@ -18,11 +18,12 @@ import java.util.Objects;
 @ToString @Builder
 @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name = "users    ")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "users")
 //we use
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 

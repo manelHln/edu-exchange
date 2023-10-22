@@ -20,7 +20,7 @@ public class Comment {
 
     //hierachisation of comments
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JoinColumn(name = "parent_id")
     private Comment parent;
 
     //comment got  many votes
@@ -29,11 +29,11 @@ public class Comment {
 
     //comment belong to a single post
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @JoinColumn(name = "post_id")
     private Post post;
     //comment belongs to a single user
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "edu_id", referencedColumnName = "id")
+    @JoinColumn(name = "edu_id")
     private EduUser edu;
 
     //some methods for insertion and update of content

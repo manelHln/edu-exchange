@@ -16,7 +16,8 @@ module.exports = {
         'black-primary': "#1B1C20",
         "light-primary": "#383A47",
         "bg-light": "#F8F8FA",
-        "custom-orange": "#FB8E0B"
+        "custom-orange": "#FB8E0B",
+        "login-orange" : "#fec887"
       },
       fontFamily: {
         "dm-sans": ["var(--font-dm_sans)"],

@@ -9,3 +9,7 @@ export {default as time} from "./time.png";
 export {default as video} from "./video.png";
 export {default as video_call} from "./videoCall.png";
 export {default as learn} from "./learn.jpg"
+export {default as ActiveIcon} from "./activeIcon.png";
+export {default as myUser} from "./user.jpeg";
+
+

@@ -3,8 +3,8 @@ import Button from "./Button";
 
 const Cta = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-8 py-20">
-      <p className="text-5xl leading-[3.8rem] font-bold text-black-primary text-center w-[70%]">
+    <div className="flex flex-col justify-center items-center gap-8 py-16 sm:py-20">
+      <p className="text-4xl sm:text-5xl leading-[3rem] sm:leading-[3.8rem] font-bold text-black-primary text-center sm:w-[70%]">
         Join EduExchange Today and Be Part of the Learning Revolution!
       </p>
       <Button

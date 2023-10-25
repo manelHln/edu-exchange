@@ -23,20 +23,20 @@ const features = [
 
 const Features = () => {
   return (
-    <div className="py-20 flex flex-col justify-center items-center gap-12">
+    <div className="py-20 flex flex-col justify-center items-center gap-12 text-center sm:text-left">
       <div className="flex flex-col flex-1 items-center justify-center gap-4">
         <h2
           className={`text-4xl font-bold text-black-primary capitalize ${montserrat.className}`}
         >
           what you can expect from our platform
         </h2>
-        <p className="w-[70%] text-md text-light-primary text-center">
+        <p className="sm:w-[70%] text-md text-light-primary text-center">
           We understand the challenges students and teachers face, which is why
           we created EduExchange.
         </p>
       </div>
 
-      <div className="flex justify-between items-center flex-wrap">
+      <div className="flex justify-between items-center flex-wrap gap-4">
         {features.map((e, i) => (
           <FeatureCard
             key={`${e.title.split(" ")[0]}-${i}`}

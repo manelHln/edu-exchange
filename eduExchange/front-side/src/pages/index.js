@@ -29,15 +29,15 @@ export default function Home() {
     <div>
       <LandingPageNavbar />
       <main>
-        <div className="sm:px-40">
+        <div className="sm:px-40 px-8">
           <Banner />
         </div>
 
-        <div className="sm:px-40">
+        <div className="sm:px-40 px-8">
           <Features />
         </div>
 
-        <div className="sm:px-40 bg-bg-light">
+        <div className="sm:px-40 px-8 bg-bg-light">
           <SectionContainer
             title="Collaborate and <br /> share organizationnal knowledge"
             description="Our platform streamlines the exchange of knowledge, fostering innovation, and enhancing productivity across your organization."
@@ -46,7 +46,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="sm:px-40">
+        <div className="sm:px-40 px-8">
           <SectionContainer
             title="Real-time chatting <br /> between students<br /> and teachers"
             description="Enhance the educational experience with instant communication. Our app enables real-time chatting between teachers and classmates, promoting interactive discussions, quick question-and-answer sessions, and personalized support."
@@ -55,7 +55,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="sm:px-40 bg-bg-light">
+        <div className="sm:px-40 px-8 bg-bg-light">
           <SectionContainer
             title="Knowledge Exchange and Q&A Forums"
             description="Create custom landing pages with Rareblocks that converts more visitors than any website. With lots of unique blocks easily build a page. There are many variations of passages of available. "
@@ -67,7 +67,7 @@ export default function Home() {
 
         {/* <Testimonials /> */}
 
-        <div className="sm:px-40 ">
+        <div className="sm:px-40 px-8">
           <Cta />
         </div>
       </main>

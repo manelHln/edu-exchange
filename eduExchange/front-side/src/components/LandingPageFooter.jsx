@@ -4,8 +4,8 @@ import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 
 const LandingPageFooter = () => {
   return (
-    <div className="hidden sm:flex sm:flex-col px-40">
-      <div className="flex flex-1 justify-between items-center py-4">
+    <div className="flex sm:px-40 px-16">
+      <div className="flex flex-col sm:flex-row gap-4 flex-1 justify-between items-center py-4">
         <div>edu.Exchange</div>
         <p className="text-light-primary text-sm font-light">
           © Copyright 2023 All Rights Reserved

@@ -7,15 +7,15 @@ import { montserrat, dm_sans } from "@/utils/fonts";
 
 const Banner = () => {
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       <div className="flex flex-col flex-1 gap-8 justify-center py-16">
         <h2
-          className={`text-5xl leading-[3.8rem] font-bold text-black-primary ${montserrat.className}`}
+          className={`text-4xl sm:text-5xl sm:leading-[3.8rem] font-bold text-black-primary ${montserrat.className}`}
         >
-          Let's build a better <br /> educational future <br /> together.
+          Let's build a better educational future together.
         </h2>
         <p
-          className={`w-[80%] leading-relaxed text-light-primary text-lg opacity-80 ${dm_sans.className}`}
+          className={`sm:w-[80%] leading-relaxed text-light-primary text-lg opacity-80 ${dm_sans.className}`}
         >
           Our goal is to provide a virtual space where knowledge is shared,
           questions find quick answers, and learning becomes a collaborative
@@ -52,7 +52,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 items-center">
+      <div className="flex flex-1 items-center w-full">
         <Image src={bannerImg} width="100%" height="100%" alt="hero image" />
       </div>
     </div>

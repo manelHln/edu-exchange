@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Button from "./Button";
 import Counter from "./Counter";
+import { motion } from "framer-motion"
 
 const SectionContainer = ({
   title,
@@ -13,12 +14,16 @@ const SectionContainer = ({
 }) => {
   return (
     <div className={`flex justify-center items-center py-20`}>
-      <div
-        className={`flex justify-center items-center gap-4 ${
+      <motion.div
+        className={`flex flex-col sm:flex-row justify-center items-center gap-4 opacity-0 ${
           reversed && "flex-row-reverse"
         }`}
+        whileInView={{ opacity: [0, 1] }}
+        transition={{ duration: 0.5 }}
       >
-        <div className={`flex flex-1 w-full ${reversed ? "justify-end" : null}`}>
+        <div
+          className={`flex flex-1 w-full ${reversed ? "justify-end" : null}`}
+        >
           <div className="flex flex-col gap-4">
             <h2
               className="text-4xl font-bold leading-[2.8rem] text-black-primary"
@@ -49,12 +54,16 @@ const SectionContainer = ({
             </div>
           </div>
         </div>
-        <div className={`flex items-center flex-1 w-full ${reversed ? "justify-start" : "justify-end"}`}>
-          <div className="w-[80%]">
+        <div
+          className={`flex items-center flex-1 w-full ${
+            reversed ? "justify-start" : "justify-end"
+          }`}
+        >
+          <div className="sm:w-[80%]">
             <Image src={mockupImg} width="100%" height="100%" alt={mockupImg} />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

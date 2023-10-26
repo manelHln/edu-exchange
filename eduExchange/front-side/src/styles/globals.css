@@ -8,6 +8,51 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(68, 68, 63, 0.295);
+  width: 300px;
+  padding: 14px;
+  border-radius: 25px;
+}
+.card-row {
+  align-items: center;
+  font-size: 12px;
+  width: auto;
+}
+.pictureFrame {
+  position: relative;
+  max-width: 100px;
+  border-radius: 25%;
+}
+.iconFrame {
+  width: 10px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+.counter {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(18, 73, 192, 0.849);
+  width: 36px;
+  height: 36px;
+}
+
+
+
+
+
+
+
+
+
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

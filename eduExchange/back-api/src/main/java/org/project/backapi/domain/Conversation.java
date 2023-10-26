@@ -15,10 +15,10 @@ public class Conversation {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "initiator_id")
-    private EduUser initiator;
+    private User initiator;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "receiver_id")
-    private EduUser receiver;
+    private User receiver;
 
     @OneToMany(mappedBy = "conversation")
     private Set<Message> messages;

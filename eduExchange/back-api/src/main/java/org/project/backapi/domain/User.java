@@ -13,14 +13,12 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
-@Getter @Setter
-@ToString @Builder
+@Getter @Setter @Builder
 @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "users")
-//chaque classe fille aura sa  table de plus user aussi est une table
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +31,13 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Enumerated
+    @Column(name = "fullname")
+    private String fullname;
+
+    @Column(name = "pseudo")
+    private String pseudo;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
     private UserRole userRole;
 
@@ -41,10 +45,35 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDate createdAt;
 
+    @Column(name = "speciality")
+    private String teacherSpeciality;
+
     @Builder.Default
     private Boolean enabled=Boolean.TRUE;
 
+    //relations
+    @OneToMany(mappedBy = "user")
+    private Set<Vote> votes;
 
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private Set<Post> posts;
+
+    @OneToMany(mappedBy = "initiator")
+    @ToString.Exclude
+    private Set<Conversation> initiatedConversations;
+
+    @OneToMany(mappedBy = "receiver")
+    @ToString.Exclude
+    private Set<Conversation> receivedConversations;
+
+    @OneToMany(mappedBy = "sender")
+    @ToString.Exclude
+    private Set<Message> messages;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -96,5 +125,25 @@ public class User implements UserDetails {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now();
+    }
+
+    @Override
+    public String toString() {
+
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", userRole=" + userRole +
+                ", createdAt=" + createdAt +
+                ", teacherSpeciality='" + teacherSpeciality +
+                '}';
     }
 }

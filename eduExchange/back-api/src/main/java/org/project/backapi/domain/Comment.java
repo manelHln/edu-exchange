@@ -13,11 +13,19 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
+
     // body of a comment, not sure if it will be String type due to String limit in dba
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+
     private LocalDateTime created_at;
 
+    @ElementCollection
+    @CollectionTable(name = "comment_images", joinColumns = @JoinColumn(name = "comment_id"))
+    @Column(name = "image_paths", nullable = true)
+    private List<String> imagePaths;
+
+    //relations
     //hierachisation of comments
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
@@ -33,8 +41,8 @@ public class Comment {
     private Post post;
     //comment belongs to a single user
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "edu_id")
-    private EduUser edu;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //some methods for insertion and update of content
     @PrePersist

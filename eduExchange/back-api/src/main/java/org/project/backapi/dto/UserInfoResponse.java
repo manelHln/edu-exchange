@@ -14,4 +14,5 @@ public class UserInfoResponse {
     private String pseudo;
     private String email;
     private long id;
+    private String speciality;
 }

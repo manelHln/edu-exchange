@@ -3,11 +3,8 @@ import LandingPageFooter from "@/components/LandingPageFooter";
 import Banner from "@/components/Banner";
 import SectionContainer from "@/components/SectionContainer";
 import Features from "@/components/Features";
-import { ActiveIcon, learn, message_1, message_2, myUser, user } from "@/assets/images";
+import { learn, message_1, message_2 } from "@/assets/images";
 import Cta from "@/components/Cta";
-import Testimonials from "@/components/Testimonials";
-import { ChatCard } from "@/components/ChatCard";
-import Header from "@/components/Header";
 
 
 const buttonAttributes = {

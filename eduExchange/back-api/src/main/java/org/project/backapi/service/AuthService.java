@@ -1,8 +1,8 @@
 package org.project.backapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.project.backapi.domain.User;
-import org.project.backapi.domain.UserRole;
+import org.project.backapi.domain.*;
+import org.project.backapi.enums.UserRole;
 import org.project.backapi.dto.AuthRequest;
 import org.project.backapi.dto.AuthResponse;
 import org.project.backapi.dto.RegisterRequest;
@@ -29,15 +29,21 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         try {
-            var user = User.builder()
-                    .email(request.getEmail())
-                    .fullname(request.getFullname())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .pseudo(request.getPseudo())
-                    .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
-                    .build();
             if (userRepository.existsByEmail(request.getEmail()))
                 throw new UserAuthenticationException("User already exists!");
+            User user = User.builder()
+                    .email(request.getEmail())
+                    .fullname(request.getFullname())
+                    .password(request.getPassword())
+                    .pseudo(request.getPseudo())
+                    /*
+                    le role dans le request doit être validé avant de continuer la création
+                    exemple : le role envoyé dans le formulaire est sttttudent
+                     */
+
+                    .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
+                    .teacherSpeciality(request.getTeacherSpeciality())
+                    .build();
             userRepository.save(user);
             var token = jwtService.generateToken(user);
             return AuthResponse.builder()
@@ -50,7 +56,7 @@ public class AuthService {
         }
     }
 
-    public AuthResponse authenticate(AuthRequest request) {
+public AuthResponse authenticate(AuthRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

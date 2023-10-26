@@ -3,9 +3,12 @@ import LandingPageFooter from "@/components/LandingPageFooter";
 import Banner from "@/components/Banner";
 import SectionContainer from "@/components/SectionContainer";
 import Features from "@/components/Features";
-import { learn, message_1, message_2 } from "@/assets/images";
+import { ActiveIcon, learn, message_1, message_2, myUser, user } from "@/assets/images";
 import Cta from "@/components/Cta";
 import Testimonials from "@/components/Testimonials";
+import { ChatCard } from "@/components/ChatCard";
+import Header from "@/components/Header";
+
 
 const buttonAttributes = {
   text: "Start chatting now",
@@ -65,7 +68,7 @@ export default function Home() {
           />
         </div>
 
-        {/* <Testimonials /> */}
+    //     {/* <Testimonials /> */}
 
         <div className="sm:px-40 px-8">
           <Cta />

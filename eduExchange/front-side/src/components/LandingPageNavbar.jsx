@@ -27,6 +27,7 @@ const LandingPageNavbar = () => {
         <Button
           text={"Get started Now"}
           className="cursor-pointer py-2 px-4 rounded-md text-white bg-custom-orange text-sm"
+          to="register"
         />
       </div>
 

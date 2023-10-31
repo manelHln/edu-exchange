@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Button from "./Button";
 import Counter from "./Counter";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 const SectionContainer = ({
   title,
@@ -18,8 +18,9 @@ const SectionContainer = ({
         className={`flex flex-col sm:flex-row justify-center items-center gap-4 opacity-0 ${
           reversed && "flex-row-reverse"
         }`}
-        whileInView={{ opacity: [0, 1] }}
-        transition={{ duration: 0.5 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        animate={{ y: 100, opacity: 1 }}
+        transition={{ duration: 0.5, delayChildren: 0.5 }}
       >
         <div
           className={`flex flex-1 w-full ${reversed ? "justify-end" : null}`}

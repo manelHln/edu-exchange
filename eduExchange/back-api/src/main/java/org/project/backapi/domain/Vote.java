@@ -20,6 +20,8 @@ public class Vote {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private Comment comment;
+
+
     //vote belong to a single user
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

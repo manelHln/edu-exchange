@@ -6,12 +6,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.project.backapi.enums.UserRole.*;
 
+
 @SpringBootApplication
+@ComponentScan(basePackages = "org.project.backapi")
 public class BackApiApplication {
 
     public static void main(String[] args) {
@@ -50,7 +53,7 @@ public class BackApiApplication {
             var teacher = RegisterRequest.builder()
                     .fullname("Teacher")
                     .email("teacher@mail.com")
-                    .password("password")
+                        .password("password")
                     .role(String.valueOf(TEACHER))
                     .teacherSpeciality("Mathematics")
                     .pseudo("first teacher second user")

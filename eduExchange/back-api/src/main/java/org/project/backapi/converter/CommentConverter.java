@@ -10,9 +10,13 @@ import java.util.List;
 
 @Component
 public class CommentConverter {
-    public CommentDto convert(Comment comment) {
+    public static CommentDto convert(Comment comment) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(comment, CommentDto.class);
+    }
+    public static Comment convertToEntity(CommentDto commentDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(commentDto, Comment.class);
     }
 
     public List<CommentDto> convert(List<Comment> comments) {

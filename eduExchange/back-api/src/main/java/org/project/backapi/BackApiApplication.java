@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import static org.project.backapi.enums.UserRole.*;
 
 @SpringBootApplication
-public class BackApiApplication {
+public class  BackApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BackApiApplication.class, args);

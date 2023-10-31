@@ -7,7 +7,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Entity @Table(name = "post")
+@Entity @Table(name = "post") @Builder
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Post {
     @Id

@@ -34,7 +34,7 @@ public class AuthService {
             User user = User.builder()
                     .email(request.getEmail())
                     .fullname(request.getFullname())
-                    .password(request.getPassword())
+                    .password(passwordEncoder.encode(request.getPassword()))
                     .pseudo(request.getPseudo())
                     /*
                     le role dans le request doit être validé avant de continuer la création

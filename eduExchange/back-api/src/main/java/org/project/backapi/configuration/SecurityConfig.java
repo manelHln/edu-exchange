@@ -39,13 +39,15 @@ public class SecurityConfig {
                         authorize
                                 .requestMatchers(
                                     "/api-docs/**",
-                                    "/api/v1/auth/register",
-                                    "/api/v1/auth/login",
+                                    "/auth/register",
+                                    "/auth/login",
                                     "/swagger-ui/**"
                                     )
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated()
+                                //authenticated()
+                                .permitAll()
+
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

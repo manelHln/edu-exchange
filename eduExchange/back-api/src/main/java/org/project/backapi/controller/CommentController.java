@@ -23,6 +23,16 @@
             this.commentService = commentService;
         }
 
+        @GetMapping("/{commentId}/replies")
+        public ResponseEntity<List<Comment>> getRepliesToComment(@PathVariable Long commentId) {
+            List<Comment> commentReplies = commentService.getRepliesToComment(commentId);
+            return ResponseEntity.ok(commentReplies);
+        }
+
+        @DeleteMapping("/delete/{id}")
+        public ResponseEntity<String> deleteComment(@PathVariable(value = "id") Long id) {
+            return new ResponseEntity<>(commentService.delete(id), HttpStatus.OK);
+        }
 
         @GetMapping("/post/{postId}")
         public List<Comment> getAllCommentsByPostId(@PathVariable Long postId) {
@@ -38,13 +48,6 @@
 
 //            CommentDto savedCommentDto = commentService.createComment(commentDto,postId,userId);
             return new ResponseEntity<>(commentService.createComment(commentDto,postId,userId), HttpStatus.CREATED);
-        }
-
-        // Get comments of a comment
-        @GetMapping("/{commentId}/replies")
-        public ResponseEntity<List<Comment>> getRepliesToComment(@PathVariable Long commentId) {
-            List<Comment> commentReplies = commentService.getRepliesToComment(commentId);
-            return ResponseEntity.ok(commentReplies);
         }
 
 

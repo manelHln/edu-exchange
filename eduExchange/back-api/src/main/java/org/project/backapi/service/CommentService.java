@@ -62,4 +62,9 @@ public class CommentService {
         // Use the CommentRepository to fetch replies to a specific comment
         return commentRepository.findByParentId(commentId);
     }
+
+    public String delete(Long id) {
+        commentRepository.deleteById(id);
+        return "Comment deleted successfully";
+    }
 }

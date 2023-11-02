@@ -14,10 +14,6 @@ public class CommentConverter {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(comment, CommentDto.class);
     }
-    public static Comment convertToEntity(CommentDto commentDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(commentDto, Comment.class);
-    }
 
     public List<CommentDto> convert(List<Comment> comments) {
         ModelMapper modelMapper = new ModelMapper();

@@ -10,36 +10,48 @@ import org.project.backapi.dto.CommentDto;
 import org.project.backapi.repository.CommentRepository;
 import org.project.backapi.repository.PostRepository;
 import org.project.backapi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CommentService {
-    private final CommentRepository commentRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private PostRepository postRepository;
 
 
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
-    public CommentDto createComment(CommentDto commentDto, Long postId, Long userId) {
-        Comment comment = CommentConverter.convertToEntity(commentDto);
+
+    public String createComment(CommentDto commentDto, Long postId, Long userId) {
 
         // Recherche du post et de l'utilisateur en fonction de leurs IDs
         Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("Post not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Comment parentComment = null;
+        if(null != commentDto.getParentId()){
+            parentComment = commentRepository.findById(commentDto.getParentId()).orElseThrow(()-> new EntityNotFoundException("Comment not found"));
+        }
 
-        // Associer le post et l'utilisateur au commentaire
-        comment.setPost(post);
-        comment.setUser(user);
+        Comment comment = Comment.builder()
+                .imagePaths(commentDto.getImagePaths())
+                .content(commentDto.getContent())
+                .parent(parentComment)
+                .post(post)
+                .user(user)
+                .build();
 
         // Enregistrer le commentaire dans la base de données
         Comment savedComment = commentRepository.save(comment);
 
         // Convertir l'entité Comment en CommentDto et le renvoyer
-        return CommentConverter.convert(savedComment);
+        return "Comment created successfully";
     }
 
     public List<Comment> getAllCommentsByPostId(Long postId) {

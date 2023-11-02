@@ -6,12 +6,12 @@ import lombok.Setter;
 import org.project.backapi.domain.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 public class CommentDto {
-    private Long id;
     private String content;
     private User user;
-    private LocalDateTime created_at;
-
+    private List<String> imagePaths;
+    private Long parentId;
 }

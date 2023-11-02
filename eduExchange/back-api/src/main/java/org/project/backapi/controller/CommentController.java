@@ -30,14 +30,14 @@
         }
 
         //Get all comments of specific post
-        @PostMapping("createComment/{postId}/{userId}")
-        public ResponseEntity<CommentDto> createComment(
+        @PostMapping("create/{postId}/{userId}")
+        public ResponseEntity<String> createComment(
                                                         @PathVariable Long postId,
                                                         @PathVariable Long userId,
-                                                        @Valid @RequestBody CommentDto commentDto) {
+                                                        @RequestBody CommentDto commentDto) {
 
-            CommentDto savedCommentDto = commentService.createComment(commentDto,postId,userId);
-            return new ResponseEntity<>(savedCommentDto, HttpStatus.CREATED);
+//            CommentDto savedCommentDto = commentService.createComment(commentDto,postId,userId);
+            return new ResponseEntity<>(commentService.createComment(commentDto,postId,userId), HttpStatus.CREATED);
         }
 
         // Get comments of a comment

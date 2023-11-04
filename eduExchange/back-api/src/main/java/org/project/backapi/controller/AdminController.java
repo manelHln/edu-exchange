@@ -1,7 +1,7 @@
 package org.project.backapi.controller;
 
 import org.project.backapi.domain.User;
-import org.project.backapi.dto.UserDto;
+import org.project.backapi.dto.modelsDto.UserDto;
 import org.project.backapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

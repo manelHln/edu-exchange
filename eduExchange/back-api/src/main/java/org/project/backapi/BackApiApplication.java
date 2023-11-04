@@ -1,6 +1,6 @@
 package org.project.backapi;
 
-import org.project.backapi.dto.RegisterRequest;
+import org.project.backapi.dto.request.RegisterRequest;
 import org.project.backapi.service.AuthService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

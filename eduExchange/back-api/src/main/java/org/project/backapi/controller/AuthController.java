@@ -3,10 +3,10 @@ package org.project.backapi.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.project.backapi.dto.AuthRequest;
-import org.project.backapi.dto.AuthResponse;
-import org.project.backapi.dto.RegisterRequest;
-import org.project.backapi.dto.UserInfoResponse;
+import org.project.backapi.dto.request.AuthRequest;
+import org.project.backapi.dto.response.AuthResponse;
+import org.project.backapi.dto.request.RegisterRequest;
+import org.project.backapi.dto.response.UserInfoResponse;
 import org.project.backapi.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

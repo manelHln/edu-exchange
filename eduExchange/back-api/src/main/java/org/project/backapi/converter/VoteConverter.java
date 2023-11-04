@@ -2,7 +2,7 @@ package org.project.backapi.converter;
 
 import org.modelmapper.ModelMapper;
 import org.project.backapi.domain.Vote;
-import org.project.backapi.dto.VoteDto;
+import org.project.backapi.dto.modelsDto.VoteDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

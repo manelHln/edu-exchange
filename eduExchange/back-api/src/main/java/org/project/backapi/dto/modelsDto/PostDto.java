@@ -1,6 +1,5 @@
-package org.project.backapi.dto.Post;
+package org.project.backapi.dto.modelsDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -12,8 +11,6 @@ public class PostDto {
     private Long id;
     private String content;
     private List<String> imagePaths;
-    private LocalDateTime createdAt;
     private Long userId;
-    private Set<Long> topicIds;
     private Set<String> topicNames;
 }

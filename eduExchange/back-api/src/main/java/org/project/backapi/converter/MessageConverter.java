@@ -2,7 +2,7 @@ package org.project.backapi.converter;
 
 import org.modelmapper.ModelMapper;
 import org.project.backapi.domain.Message;
-import org.project.backapi.dto.MessageDto;
+import org.project.backapi.dto.modelsDto.MessageDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

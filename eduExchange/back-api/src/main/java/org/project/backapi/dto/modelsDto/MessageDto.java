@@ -1,13 +1,13 @@
-package org.project.backapi.dto;
+package org.project.backapi.dto.modelsDto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
+@Setter
 public class MessageDto {
     private Long id;
     private String content;
-    private LocalDateTime createdAt;
+    private Long authorId;
 }

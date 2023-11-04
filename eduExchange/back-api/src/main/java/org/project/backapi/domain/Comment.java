@@ -2,7 +2,10 @@ package org.project.backapi.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +21,13 @@ public class Comment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime created_at;
+    @CreatedDate
+    @Column(nullable = false, updatable = false, name = "created_at")
+    private Instant createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
     @ElementCollection
     @CollectionTable(name = "comment_images", joinColumns = @JoinColumn(name = "comment_id"))
@@ -47,6 +56,12 @@ public class Comment {
     //some methods for insertion and update of content
     @PrePersist
     protected void onCreate() {
-        created_at  = LocalDateTime.now();
+        createdAt = Instant.now();
+        updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = Instant.now();
     }
 }

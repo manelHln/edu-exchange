@@ -1,14 +1,10 @@
     package org.project.backapi.controller;
 
-    import jakarta.validation.Valid;
-    import org.project.backapi.domain.Comment;
-    import org.project.backapi.domain.User;
-    import org.project.backapi.dto.CommentDto;
+    import org.project.backapi.dto.modelsDto.CommentDto;
     import org.project.backapi.service.CommentService;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
-    import org.springframework.security.access.prepost.PreAuthorize;
     import org.springframework.web.bind.annotation.*;
 
     import java.util.List;
@@ -24,30 +20,21 @@
         }
 
         @GetMapping("/{commentId}/replies")
-        public ResponseEntity<List<Comment>> getRepliesToComment(@PathVariable Long commentId) {
-            List<Comment> commentReplies = commentService.getRepliesToComment(commentId);
-            return ResponseEntity.ok(commentReplies);
+        public ResponseEntity<List<CommentDto>> getRepliesToComment(@PathVariable Long commentId) {
+
+            return new ResponseEntity<>(commentService.getRepliesToComment(commentId),HttpStatus.OK);
         }
 
-        @DeleteMapping("/delete/{id}")
-        public ResponseEntity<String> deleteComment(@PathVariable(value = "id") Long id) {
-            return new ResponseEntity<>(commentService.delete(id), HttpStatus.OK);
+        @PutMapping()
+        public ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto commentDto) {
+            CommentDto updatedComment = commentService.updateComment(commentDto.getId(), commentDto.getContent());
+            return new ResponseEntity<>(updatedComment, HttpStatus.OK);
         }
 
-        @GetMapping("/post/{postId}")
-        public List<Comment> getAllCommentsByPostId(@PathVariable Long postId) {
-            return commentService.getAllCommentsByPostId(postId);
-        }
+        @PostMapping
+        public ResponseEntity<Object> createComment(@RequestBody CommentDto commentDto) {
 
-        //Get all comments of specific post
-        @PostMapping("create/{postId}/{userId}")
-        public ResponseEntity<String> createComment(
-                                                        @PathVariable Long postId,
-                                                        @PathVariable Long userId,
-                                                        @RequestBody CommentDto commentDto) {
-
-//            CommentDto savedCommentDto = commentService.createComment(commentDto,postId,userId);
-            return new ResponseEntity<>(commentService.createComment(commentDto,postId,userId), HttpStatus.CREATED);
+            return new ResponseEntity<>(commentService.createComment(commentDto), HttpStatus.CREATED);
         }
 
 

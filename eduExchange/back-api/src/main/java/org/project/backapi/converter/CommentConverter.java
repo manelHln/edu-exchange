@@ -1,26 +1,47 @@
 package org.project.backapi.converter;
 
-import org.modelmapper.ModelMapper;
 import org.project.backapi.domain.Comment;
-import org.project.backapi.dto.CommentDto;
+import org.project.backapi.domain.Post;
+import org.project.backapi.domain.User;
+import org.project.backapi.dto.modelsDto.CommentDto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CommentConverter {
-    public static CommentDto convert(Comment comment) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(comment, CommentDto.class);
+    public CommentDto convert(Comment comment) {
+        CommentDto dto = new CommentDto();
+        dto.setId(comment.getId());
+        dto.setContent(comment.getContent());
+        dto.setImagePaths(comment.getImagePaths());
+        dto.setAuthorId(comment.getUser().getId());
+        dto.setPostId(comment.getPost().getId());
+        if (comment.getParent() != null) {
+            dto.setParentId(comment.getParent().getId());
+        }
+        //dto.setReplies(getReplies(comment));
+
+        return dto;
     }
 
+
     public List<CommentDto> convert(List<Comment> comments) {
-        ModelMapper modelMapper = new ModelMapper();
-        List<CommentDto> converted = new ArrayList<>();
-        for(Comment comment: comments) {
-            converted.add(convert(comment));
-        }
-        return converted;
+
+        return comments.stream()
+                .map(this::convert)
+                .collect(Collectors.toList());
+    }
+
+    public Comment convert(CommentDto dto, User author, Comment parent, Post post) {
+        Comment comment = Comment.builder()
+                .content(dto.getContent())
+                .parent(parent)
+                .post(post)
+                .user(author)
+                .build();
+
+        return comment;
     }
 }

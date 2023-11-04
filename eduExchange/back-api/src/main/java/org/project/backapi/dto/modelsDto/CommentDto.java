@@ -1,17 +1,18 @@
-package org.project.backapi.dto;
-
+package org.project.backapi.dto.modelsDto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.project.backapi.domain.User;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CommentDto {
+    private Long id;
     private String content;
-    private User user;
     private List<String> imagePaths;
+    private Long authorId;
+    private Long postId;
     private Long parentId;
+    private List<CommentDto> replies;
 }

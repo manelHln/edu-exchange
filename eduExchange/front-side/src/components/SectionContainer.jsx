@@ -16,7 +16,7 @@ const SectionContainer = ({
     <div className={`flex justify-center items-center py-20`}>
       <motion.div
         className={`flex flex-col sm:flex-row justify-center items-center gap-4 opacity-0 ${
-          reversed && "flex-row-reverse"
+          reversed && "sm:flex-row-reverse"
         }`}
         whileInView={{ opacity: 1, y: 0 }}
         animate={{ y: 100, opacity: 1 }}

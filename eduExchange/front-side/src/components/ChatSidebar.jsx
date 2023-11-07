@@ -1,7 +1,14 @@
 import React from "react";
 import { ChatCard } from "./ChatCard";
-import { PlusIcon } from "lucide-react";
-import { dm_sans } from "@/utils/fonts";
+import { MessageCircle, Phone, Users2, Sheet } from "lucide-react";
+import { dm_sans, montserrat } from "@/utils/fonts";
+import InputWithIcon from "./InputWithIcon";
+import { ModeToggle } from "./ModeToggle";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { girl_1 } from "@/assets/images";
+import Image from "next/image";
+import UserInfoSheet from "./UserInfoSheet";
+import Link from "next/link";
 
 const user = {
   fullname: "Michael B",
@@ -11,25 +18,63 @@ const user = {
 
 const ChatSidebar = ({ props }) => {
   return (
-    <div className="flex flex-col items-center w-1/4 sticky top-0 bottom-0 h-screen p-4 overflow-scroll overflow-x-hidden">
-      <div className="flex justify-between items-center w-full pb-4 mb-4">
-        <h2 className={`${dm_sans.className} text-3xl font-semibold`}>Inbox</h2>
-        <PlusIcon size={24} className="cursor-pointer" />
+    <div className="flex w-1/3 sticky top-0 bottom-0 h-screen overflow-scroll no-scrollbar overflow-x-hidden border-r-slate-300 border-r">
+      <div className="flex flex-col justify-between px-2 py-4 gap-2 bg-slate-200 border-r border-slate-300 sticky bottom-0 top-0 h-full">
+        <div className="flex flex-col gap-8 items-center">
+          <UserInfoSheet />
+
+          <div className="flex flex-col gap-3 items-center">
+            <div className="bg-blue-600 rounded-lg flex justify-center items-center p-3 cursor-pointer hover:bg-blue-600">
+              <MessageCircle size={18} />
+            </div>
+            <div className="rounded-lg flex justify-center items-center p-3 cursor-pointer hover:bg-blue-600">
+              <Users2 size={18} />
+            </div>
+            <div className="rounded-lg flex justify-center items-center p-3 cursor-pointer hover:bg-blue-600">
+              <Link href="/posts">
+                <Sheet size={18} />
+              </Link>
+            </div>
+          </div>
+        </div>
+        {/* <div>
+          <ModeToggle />
+        </div> */}
       </div>
+
       <div className="flex flex-col gap-2 w-full">
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
-        <ChatCard props={user} />
+        {/* <div className="flex justify-between items-center w-full">
+          <h2 className={`${dm_sans.className} text-xl font-semibold`}>
+            Chats
+          </h2>
+        </div> */}
+
+        <div className="p-4">
+          <InputWithIcon
+            startIcon={"search"}
+            placeholder={"Search..."}
+            size={16}
+            classnames={
+              "border-slate-300 rounded-lg bg-slate-200 dark:bg-transparent dark:border"
+            }
+          />
+        </div>
+
+        <div className="flex flex-col py-4 gap-2">
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+          <ChatCard props={user} />
+        </div>
       </div>
     </div>
   );

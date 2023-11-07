@@ -1,103 +1,46 @@
-import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import {
-  ArrowBigDownDash,
-  ArrowBigUpDash,
-  MessageCircle,
-  MoreVertical,
+  ArrowBigDown,
+  ArrowBigUp,
+  MessageSquare,
+  Flag
 } from "lucide-react";
-import CustomBadge from "./CustomBadge";
 
-const colors = [
-  {
-    bg: "bg-blue-100",
-    text: "text-blue-400",
-  },
-  {
-    bg: "bg-red-100",
-    text: "text-red-400",
-  },
-  {
-    bg: "bg-green-100",
-    text: "text-green-400",
-  },
-  {
-    bg: "bg-orange-100",
-    text: "text-orange-400",
-  },
-  {
-    bg: "bg-purple-100",
-    text: "text-purple-400",
-  },
-  {
-    bg: "bg-yellow-100",
-    text: "text-yellow-400",
-  },
-];
-
-const randint = Math.floor(Math.random() * colors.length);
+import Link from "next/link";
 
 const PostCard = () => {
   return (
-    <div className="flex flex-col sm:flex-row justify-center items-center gap-6 flex-1 min-w-[300px] max-w-[400px] shadow-md bg-white rounded-md p-2 cursor-pointer">
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-between items-center">
-          <div className="flex gap-2 items-center">
-            <Avatar>
-              <AvatarImage src="girl1.png" width={40}></AvatarImage>
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+    <div className="flex flex-col sm:flex-row gap-3 w-full bg-white rounded-sm border border-slate-300">
+      <div className="text-slate-500 flex flex-col items-center h-full bg-slate-50 p-2">
+        <ArrowBigUp className="cursor-pointer" />
+        <span>23</span>
+        <ArrowBigDown className="cursor-pointer" />
+      </div>
 
-            <div className="flex flex-col">
-              <p className="text-xs text-slate-500">Edward Newgate</p>
-              <p className="text-xs text-slate-500">@whitebeard</p>
-            </div>
-          </div>
-
-          <MoreVertical size={18} className="cursor-pointer text-slate-500" />
+      <div className="flex flex-col gap-2 py-2">
+        <div className="flex items-center gap-2">
+          <p className="font-semibold text-sm">r/programming</p>
+          <span className="text-slate-400 text-xs">
+            Posted by John Doe 12 hours ago
+          </span>
         </div>
 
-        <p className="text-sm text-slate-500 pb-2 border-b border-slate-200">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio minima
-          similique sequi expedita aperiam.
-        </p>
-
-        <div className="flex justify-between items-center">
-          <p className="text-xs text-slate-400 font-light">
-            1:04 PM Feb 4, 2022
+        <Link className="cursor-pointer" href="/posts/1">
+          <p className="text-sm text-slate-600 font-light">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
+            nobis quia, minus modi itaque ea aperiam, exercitationem error atque
+            iusto necessitatibus deleniti hic tempora corrupti. A sed facilis
+            accusamus ratione!
           </p>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-xs text-slate-400 font-light cursor-pointer hover:text-slate-700">
-              <MessageCircle size={15} />
-              <span className="">23</span>
-            </div>
-
-            {/* <div className="flex gap-4">
-              <div className="flex gap-2 items-center text-green-400">
-                <ArrowBigUpDash
-                  size={15}
-                  className="cursor-pointer duration-100 hover:text-green-700"
-                />
-                <span className="text-xs text-slate-400 font-light">3</span>
-              </div>
-              <div className="flex gap-2 items-center text-red-400">
-                <ArrowBigDownDash
-                  size={15}
-                  className="cursor-pointer duration-100 hover:text-red-700"
-                />
-                <span className="text-xs text-slate-400 font-light">3</span>
-              </div>
-            </div> */}
+        </Link>
+        <div className="flex items-center text-slate-500 gap-4 font-semibold">
+          <div className="flex items-center gap-1 cursor-pointer">
+            <MessageSquare size={16} />{" "}
+            <span className="text-sm">73 comments</span>
           </div>
-        </div>
-
-        <div className="flex">
-          <CustomBadge
-            content="Programming"
-            textColor={colors[randint].text}
-            bgColor={colors[randint].bg}
-          />
+          <div className="flex items-center gap-1 cursor-pointer">
+            <Flag size={16} />{" "}
+            <span className="text-sm">Report</span>
+          </div>
         </div>
       </div>
     </div>

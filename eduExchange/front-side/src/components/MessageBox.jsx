@@ -1,45 +1,42 @@
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { girl_1 } from "@/assets/images";
-import chatStore from "@/store/ChatStore";
+import { MoreVertical } from "lucide-react";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "./ui/menubar";
 
 const MessageBox = ({ isInitiator, data }) => {
-  const setShowMessageOption = chatStore((state) => state.setShowMessageOption);
-  const setSelectedMessage = chatStore((state) => state.setMessageSelected);
-  const messageSelected = chatStore((state) => state.messageSelected);
-
-  const handleMessageBoxClick = () => {
-    if (messageSelected === data?.id) {
-      setShowMessageOption(false);
-      setSelectedMessage(null);
-    } else {
-      setShowMessageOption(true);
-      setSelectedMessage(1);
-    }
-  };
-
   return (
     <div
-      className={`flex items-end gap-3 ${
-        isInitiator ? "flex-row-reverse self-end" : "self-start"
+      className={`flex items-start gap-3 ${
+        isInitiator ? "self-end" : "self-start"
       }`}
     >
-      <Avatar>
-        <AvatarImage src={girl_1}></AvatarImage>
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
       <div
-        className={`flex flex-col max-w-[250px] shadow-md rounded-xl p-4 cursor-pointer hover:scale-105 duration-100 ${
-          isInitiator ? "bg-white" : "bg-gray-300"
+        className={`flex flex-col max-w-[250px] shadow-sm rounded-lg p-2 ${
+          isInitiator ? "bg-blue-600 text-white" : "bg-white"
         }`}
-        onClick={handleMessageBoxClick}
       >
-        <div className="mb-2">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-          sed quam.
-        </div>
-        <p className="self-end text-xs text-slate-400 font-normal">23:09</p>
+        <div className="mb-2">Lorem, ipsum dolor sit.</div>
+        {/* <p className="self-end text-xs text-slate-400 font-normal">23:09</p> */}
       </div>
+      <Menubar>
+        <MenubarMenu>
+          <MenubarTrigger>
+            <MoreVertical size={15} className="cursor-pointer" />
+          </MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Edit</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>Delete</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
+      {/* <MoreVertical size={15} className="cursor-pointer" /> */}
     </div>
   );
 };

@@ -1,28 +1,34 @@
-import { React } from "react";
+import React, {useState} from "react";
 import { girl_1 } from "@/assets/images";
-import { dm_sans } from "@/utils/fonts";
+import { dm_sans, montserrat } from "@/utils/fonts";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function ChatCard({ props }) {
-  const { fullname, userRole, message } = props;
+  const { fullname, message, id } = props;
+  const [selectedChatId, setSelectedChatId] = useState(null)
   return (
     <div
-      className={`flex justify-between items-center w-full p-2 rounded-md shadow-md bg-slate-100 hover:scale-105 cursor-pointer duration-150 ${dm_sans.className}`}
+      className={`flex justify-between items-center w-full p-4 cursor-pointer rounded-sm hover:bg-slate-100 ${dm_sans.className} ${selectedChatId === id ? "bg-slate-200" : "bg-white"}`}
+      onClick={()=> setSelectedChatId(id)}
     >
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <Avatar>
-          <AvatarImage src={girl_1}></AvatarImage>
+          <AvatarImage src='girl1.png'></AvatarImage>
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
-          <span className="text-sm font-semibold">{fullname}</span>
-          <span className="text-xs">{userRole}</span>
-          <span className="text-xs truncate w-20">{message}</span>
+          <span className={`text-sm font-semibold`}>{fullname}</span>
+          <span className="text-sm text-slate-500 truncate w-24">{message}</span>
         </div>
       </div>
-      <span className="flex justify-center items-center h-6 w-6 bg-blue-400 rounded-[50%]">
-        3
-      </span>
+      <div className="flex flex-col items-end gap-2">
+        <span className="flex justify-center text-xs text-slate-400 font-semibold">
+          22:00
+        </span>
+        <span className="flex justify-center items-center h-5 w-5 bg-blue-600 rounded-[50%] text-xs text-white">
+          3
+        </span>
+      </div>
     </div>
   );
 }

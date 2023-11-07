@@ -4,25 +4,28 @@ import ChatFooter from "@/components/ChatFooter";
 import EmptyMain from "@/components/EmptyMain";
 import React from "react";
 import MessageBox from "@/components/MessageBox";
-import chatStore from "@/store/ChatStore";
+import { io } from "socket.io-client";
 
 const Conversations = () => {
-  const showFooter = chatStore((state)=> state.showMessageOption)
   return (
-    <div className="w-full flex bg-gray-200">
+    <div className="w-full flex">
       <ChatSidebar />
-      <main className="w-full">
+      <main className="w-full flex flex-col">
         <ChatHeader />
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4 p-4 flex-1 bg-slate-100">
           <MessageBox isInitiator />
           <MessageBox isInitiator />
           <MessageBox />
           <MessageBox isInitiator />
+          {/* <MessageBox />
           <MessageBox />
           <MessageBox />
+          <MessageBox isInitiator />
+          <MessageBox />
+          <MessageBox /> */}
         </div>
-        <ChatFooter show={showFooter} />
         {/* <EmptyMain /> */}
+        <ChatFooter />
       </main>
     </div>
   );

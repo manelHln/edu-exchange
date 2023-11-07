@@ -2,9 +2,9 @@ import React from "react";
 
 const CustomBadge = ({ content, bgColor, textColor }) => {
   return (
-    // <div className={`rounded-sm py-1 px-2 ${bgColor}`}>
-      <span className={`text-xs font-normal ${textColor}`}>{content}</span>
-    // </div>
+    <div className={`rounded-sm p-2 ${bgColor} cursor-pointer hover:opacity-80`}>
+      <span className={`text-sm font-semibold ${textColor}`}>{content}</span>
+    </div>
   );
 };
 

@@ -43,11 +43,11 @@ public class Post {
     private Instant updatedAt;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private Boolean hidden;
+    private Boolean hidden = false;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'OPEN'")
-    private PostStatus status;
+    @Column(columnDefinition = "VARCHAR(10) DEFAULT 'OPEN'")
+    private PostStatus status = PostStatus.OPEN;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

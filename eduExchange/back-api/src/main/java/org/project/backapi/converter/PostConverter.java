@@ -5,6 +5,7 @@ import org.project.backapi.domain.Post;
 import org.project.backapi.domain.Topic;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.PostDto;
+import org.project.backapi.enums.PostStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class PostConverter {
         dto.setTitle(post.getTitle());
         dto.setCreatedAt(post.getCreatedAt());
         dto.setUpdatedAt(post.getUpdatedAt());
+        dto.setStatus(post.getStatus());
+        dto.setHidden(post.getHidden());
 
         return dto;
     }
@@ -30,7 +33,7 @@ public class PostConverter {
     public List<PostDto> convert(List<Post> posts) {
         ModelMapper modelMapper = new ModelMapper();
         List<PostDto> converted = new ArrayList<>();
-        for(Post post:posts) {
+        for (Post post : posts) {
             converted.add(convert(post));
         }
 
@@ -49,7 +52,7 @@ public class PostConverter {
 
     public List<Post> convert(List<PostDto> postDtos, User user, List<Topic> topics) {
         List<Post> converted = new ArrayList<>();
-        for(PostDto postDto: postDtos) {
+        for (PostDto postDto : postDtos) {
             converted.add(convert(postDto, user, topics));
         }
 

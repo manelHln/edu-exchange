@@ -21,11 +21,10 @@ public class CommentConverter {
         if (comment.getParent() != null) {
             dto.setParentId(comment.getParent().getId());
         }
-        //dto.setReplies(getReplies(comment));
+        // dto.setReplies(getReplies(comment));
 
         return dto;
     }
-
 
     public List<CommentDto> convert(List<Comment> comments) {
 

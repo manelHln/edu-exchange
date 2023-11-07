@@ -6,6 +6,7 @@ import org.project.backapi.domain.Report;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.ReportDto;
 import org.project.backapi.dto.response.PagedResponse;
+import org.project.backapi.exception.RejectedOperationException;
 import org.project.backapi.repository.PostRepository;
 import org.project.backapi.repository.ReportRepository;
 import org.project.backapi.utils.AppUtils;
@@ -31,6 +32,9 @@ public class ReportService {
 
     public ReportDto create(ReportDto dto, Long postId, User currentUser) {
         Post post = postRepository.findById(postId).orElseThrow();
+        if (post.getHidden().equals(true)){
+            throw new RejectedOperationException(String.format("The post: %d, you are trying to report has already been treated", postId));
+        }
         Report report = reportConverter.convert(dto,currentUser,post);
         report = reportRepository.save(report);
 
@@ -54,6 +58,22 @@ public class ReportService {
         } else {
             reports = reportRepository.findAll(pageable);
         }
+
+        if (reports.isEmpty()) {
+            return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);
+        }
+        List<ReportDto> dtos = reportConverter.convert(reports.getContent());
+
+        return new PagedResponse<>(dtos,reports.getNumber(),reports.getSize(), reports.getTotalElements(), reports.getTotalPages(), reports.isLast());
+    }
+
+    public Object getAllPostReports(Long postId, Integer page, Integer size) {
+        AppUtils.validatePageNumberAndSize(page, size);
+
+        Post post = postRepository.findById(postId).orElseThrow();
+
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        Page<Report> reports = reportRepository.findAllByPost(post, pageable);
 
         if (reports.isEmpty()) {
             return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);

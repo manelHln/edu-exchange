@@ -1,6 +1,5 @@
 package org.project.backapi.controller;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.project.backapi.dto.request.AuthRequest;
@@ -19,19 +18,20 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse>  register(@RequestBody RegisterRequest request){
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse>  authenticate(@RequestBody AuthRequest request){
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
     @GetMapping("/userinfo")
-    public ResponseEntity<UserInfoResponse> getUserInfo(HttpServletRequest request){
+    public ResponseEntity<UserInfoResponse> getUserInfo(HttpServletRequest request) {
         final String authHeader = request.getHeader("Authorization");
         String jwt = authHeader.split(" ")[1].trim();
         return new ResponseEntity<>(authService.getUserInfo(jwt), HttpStatus.OK);
     }
+
 }

@@ -27,16 +27,14 @@ public class TopicController {
     public ResponseEntity<PagedResponse<PostDto>> getTopicPosts(
             @PathVariable String topicName,
             @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size
-    ) {
-        return new ResponseEntity<>(postService.getTopicPosts(topicName,page,size), HttpStatus.OK);
+            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
+        return new ResponseEntity<>(postService.getTopicPosts(topicName, page, size), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<PagedResponse<TopicDto>>  getAllTopics(
+    public ResponseEntity<PagedResponse<TopicDto>> getAllTopics(
             @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size
-		) {
+            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
         return new ResponseEntity<>(postService.getAllTopics(page, size), HttpStatus.OK);
     }
 }

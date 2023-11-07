@@ -8,6 +8,9 @@ import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.PostDto;
 import org.project.backapi.dto.modelsDto.TopicDto;
 import org.project.backapi.dto.response.PagedResponse;
+import org.project.backapi.enums.PostStatus;
+import org.project.backapi.exception.ForbiddenAccessOperation;
+import org.project.backapi.exception.RejectedOperationException;
 import org.project.backapi.exception.RequestNotAuthorizedException;
 import org.project.backapi.exception.RessourceNotFoundException;
 import org.project.backapi.repository.PostRepository;
@@ -100,7 +103,15 @@ public class PostService {
                 .orElseThrow(
                         () -> new RessourceNotFoundException(String.format("Post: %d does not exist", postId)));
 
-        if (!Objects.equals(dto.getUserId(), currentUser.getId())) {
+        if(post.getHidden()) {
+            throw new ForbiddenAccessOperation("You do not have privileges to access this resource");
+        }
+
+        if(post.getStatus().equals(PostStatus.CLOSED)) {
+            throw new RequestNotAuthorizedException("You can not proceed with this request cause this post has been closed");
+        }
+
+        if (!Objects.equals(post.getUser().getId(), currentUser.getId())) {
             throw new RequestNotAuthorizedException(String.format(AppConstants.YOU_ARE_NOT_THE_AUTHOR_OF_THIS + " post"));
         }
 
@@ -118,7 +129,12 @@ public class PostService {
     }
 
     public PostDto hidePost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow();
+        Post post = postRepository.findById(postId).orElseThrow(
+            
+        );
+        if (post.getHidden().equals(true)) {
+            throw new RejectedOperationException(String.format("The post: %d, has already been hidden", postId));
+        }
         post.setHidden(true);
         post = postRepository.save(post);
 
@@ -138,11 +154,16 @@ public class PostService {
         return new PagedResponse<>(dtos, topics.getNumber(), topics.getSize(), topics.getTotalElements(), topics.getTotalPages(), topics.isLast());
     }
 
-    public PagedResponse<PostDto> getAll(int page, int size) {
+    public PagedResponse<PostDto> getAll(int page, int size, boolean onlyVisible) {
         AppUtils.validatePageNumberAndSize(page, size);
 
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts;
+        if(!onlyVisible) {
+             posts = postRepository.findAll(pageable);
+        } else {
+            posts = postRepository.findByHiddenFalse(pageable);
+        }
 
         if (posts.isEmpty()) {
             return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);
@@ -157,18 +178,17 @@ public class PostService {
                 .orElseThrow(() -> new RessourceNotFoundException(String.format("Post: %d not found", postId))));
     }
 
-    public PagedResponse<PostDto> getUserPosts(Long userId, String pseudo, int page, int size) {
+    public PagedResponse<PostDto> getUserPosts(String pseudo, int page, int size) {
         AppUtils.validatePageNumberAndSize(page, size);
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        if (userRepository.findByPseudoOrId(pseudo, userId).isEmpty()) {
-            throw new RessourceNotFoundException(String.format("User: %s, does not exist", pseudo + userId));
-        }
+        User user = userRepository.findByPseudo(pseudo).orElseThrow();
+        Set<Post> setPosts = user.getPosts();
 
-        Set<Post> setPosts = userRepository.findByPseudoOrId(pseudo, userId).get().getPosts();
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         Page<Post> posts = postRepository.findAll(pageable);
-        if (posts.getNumberOfElements() == 0) {
+        if (posts.isEmpty()) {
             return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);
         }
+
         List<PostDto> dtos = postConverter.convert(posts.getContent());
 
         return new PagedResponse<>(dtos, posts.getNumber(), posts.getSize(), posts.getTotalElements(), posts.getTotalPages(), posts.isLast());
@@ -176,13 +196,14 @@ public class PostService {
 
     public PagedResponse<PostDto> getTopicPosts(String topicName, int page, int size) {
         AppUtils.validatePageNumberAndSize(page, size);
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "name");
+
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "title");
         Topic topic = topicRepository.findByName(topicName)
                 .orElseThrow(() -> new RessourceNotFoundException(String.format("Topic: %s, does not exist", topicName)));
+    
+        Page<Post> posts = postRepository.findByTopicsName(topicName, pageable);
 
-        Page<Post> posts = postRepository.findByTopics(topic, pageable);
-
-        if (posts.getNumberOfElements() == 0) {
+        if (posts.isEmpty()) {
             return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);
         }
         List<PostDto> dtos = postConverter.convert(posts.getContent());

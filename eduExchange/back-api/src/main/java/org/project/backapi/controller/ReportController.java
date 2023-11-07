@@ -5,6 +5,7 @@ import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.ReportDto;
 import org.project.backapi.dto.response.PagedResponse;
 import org.project.backapi.repository.UserRepository;
+import org.project.backapi.service.CommentService;
 import org.project.backapi.service.ReportService;
 import org.project.backapi.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,10 @@ public class ReportController {
     @Autowired
     ReportService reportService;
 
-    @PostMapping("/posts/{postId}/reports")
+    @Autowired
+    CommentService commentService;
+
+    /*@PostMapping("/posts/{postId}/reports")
     @PreAuthorize("hasRole('STUDENT') or hasRole('TEACHER')")
     public ResponseEntity<?> create(@RequestBody @Valid ReportDto dto, @PathVariable Long postID) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -40,15 +44,22 @@ public class ReportController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+/*@GetMapping("/{postId}/comments")
+    public ResponseEntity<?> getAllCommentsByPostId(
+            @PathVariable Long postId,
+            @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
 
+        return new ResponseEntity<>(commentService.getAllCommentsByPostId(postId, page, size), HttpStatus.OK);
+    }
     @GetMapping("/reports/{reportId}")
     @PreAuthorize("hasRole('ADMIN')")
-   public ResponseEntity<ReportDto> readAReport(@PathVariable Long reportId) {
+    public ResponseEntity<ReportDto> readAReport(@PathVariable Long reportId) {
 
-        return new ResponseEntity<>(reportService.get(reportId),HttpStatus.OK);
-   }
+        return new ResponseEntity<>(reportService.get(reportId), HttpStatus.OK);
+    }*/
 
-   @GetMapping("/reports")
+    @GetMapping("/reports")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PagedResponse<ReportDto>> readAllReports(
             @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,

@@ -23,10 +23,10 @@ public class ReportConverter {
         return dto;
     }
 
-    public List<ReportDto> convert (List<Report> reports) {
+    public List<ReportDto> convert(List<Report> reports) {
         ModelMapper modelMapper = new ModelMapper();
         List<ReportDto> converted = new ArrayList<>();
-        for (Report report: reports) {
+        for (Report report : reports) {
             converted.add(convert(report));
         }
 

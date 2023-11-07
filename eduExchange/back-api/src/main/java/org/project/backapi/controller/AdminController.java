@@ -18,12 +18,12 @@ public class AdminController {
     private UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @PutMapping("/user/{userId}/edit-role")
-    public ResponseEntity<UserDto> editUserRole(@PathVariable Long userId, @RequestBody UserDto request){
+    public ResponseEntity<UserDto> editUserRole(@PathVariable Long userId, @RequestBody UserDto request) {
         return new ResponseEntity<>(userService.editUserRole(userId, request), HttpStatus.OK);
     }
 }

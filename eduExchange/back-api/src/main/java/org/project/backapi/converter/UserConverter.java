@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.project.backapi.domain.User;
-import org.project.backapi.dto.UserDto;
+import org.project.backapi.dto.modelsDto.UserDto;
 import org.springframework.stereotype.Component;
 
 @Component

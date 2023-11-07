@@ -1,10 +1,8 @@
 package org.project.backapi.converter;
 
 import org.modelmapper.ModelMapper;
-import org.project.backapi.domain.Post;
 import org.project.backapi.domain.Topic;
-import org.project.backapi.dto.PostDto;
-import org.project.backapi.dto.TopicDto;
+import org.project.backapi.dto.modelsDto.TopicDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

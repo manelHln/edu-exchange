@@ -3,10 +3,10 @@ package org.project.backapi.service;
 import lombok.RequiredArgsConstructor;
 import org.project.backapi.domain.*;
 import org.project.backapi.enums.UserRole;
-import org.project.backapi.dto.AuthRequest;
-import org.project.backapi.dto.AuthResponse;
-import org.project.backapi.dto.RegisterRequest;
-import org.project.backapi.dto.UserInfoResponse;
+import org.project.backapi.dto.request.AuthRequest;
+import org.project.backapi.dto.response.AuthResponse;
+import org.project.backapi.dto.request.RegisterRequest;
+import org.project.backapi.dto.response.UserInfoResponse;
 import org.project.backapi.exception.UserAuthenticationException;
 import org.project.backapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +34,8 @@ public class AuthService {
             User user = User.builder()
                     .email(request.getEmail())
                     .fullname(request.getFullname())
-                    .password(request.getPassword())
+                    .password(passwordEncoder.encode(request.getPassword()))
                     .pseudo(request.getPseudo())
-                    /*
-                    le role dans le request doit être validé avant de continuer la création
-                    exemple : le role envoyé dans le formulaire est sttttudent
-                     */
-
                     .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
                     .teacherSpeciality(request.getTeacherSpeciality())
                     .build();

@@ -1,14 +1,21 @@
 package org.project.backapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.Instant;
 import java.util.List;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-
-@Entity @Table(name = "post")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,26 +26,38 @@ public class Post {
     private String content;
 
     @ElementCollection
-    @CollectionTable(name = "post_images", joinColumns = @JoinColumn(name = "post_id"))
+    @CollectionTable(name = "post_image", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "image_path")
     private List<String> imagePaths;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @CreatedDate
+    @Column(nullable = false, updatable = false, name = "created_at")
+    private Instant createdAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "post_topics",
-            joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
-    private Set<Topic> topics;
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(name = "post_topic", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Topic> topics;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        createdAt = Instant.now();
+        updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = Instant.now();
     }
 }

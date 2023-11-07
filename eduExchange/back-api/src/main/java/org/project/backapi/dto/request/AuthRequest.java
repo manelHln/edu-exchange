@@ -1,4 +1,4 @@
-package org.project.backapi.dto;
+package org.project.backapi.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
-    private String fullname;
-    private String pseudo;
-    private String role;
+public class AuthRequest {
     private String email;
     private String password;
-    private String teacherSpeciality;
 }

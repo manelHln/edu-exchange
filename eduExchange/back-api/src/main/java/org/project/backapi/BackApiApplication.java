@@ -53,7 +53,7 @@ public class BackApiApplication {
             var teacher = RegisterRequest.builder()
                     .fullname("Teacher")
                     .email("teacher@mail.com")
-                        .password("password")
+                    .password("password")
                     .role(String.valueOf(TEACHER))
                     .teacherSpeciality("Mathematics")
                     .pseudo("first teacher second user")

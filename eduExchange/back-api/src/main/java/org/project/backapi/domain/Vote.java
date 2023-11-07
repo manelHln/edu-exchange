@@ -26,4 +26,9 @@ public class Vote {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
+
+    public void setVoteStatus(VoteStatus voteStatus) {
+        this.status = voteStatus;
+    }
 }

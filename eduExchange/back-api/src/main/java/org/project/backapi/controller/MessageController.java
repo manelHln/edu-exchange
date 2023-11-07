@@ -3,8 +3,8 @@ package org.project.backapi.controller;
 import lombok.RequiredArgsConstructor;
 import org.project.backapi.converter.MessageConverter;
 import org.project.backapi.domain.Message;
-import org.project.backapi.dto.MessageDto;
 import org.project.backapi.service.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +15,9 @@ import java.util.Optional;
 @RequestMapping("/api/v1/message")
 @RequiredArgsConstructor
 public class MessageController {
-    private final MessageService messageService;
+
+    @Autowired
+    private MessageService messageService;
 
     @GetMapping("/load")
     public List<Message> loadMessage() {
@@ -25,10 +27,10 @@ public class MessageController {
     public Optional<Message> searchMessage(@PathVariable Long id) {
         return messageService.searchMessage(id);
     }
-    @PostMapping("/send")
+    /*@PostMapping("/send")
     public MessageConverter sendMessage (@RequestBody MessageDto message) {
         return messageService.sendMessage(message);
-    }
+    }*/
 
 
 }

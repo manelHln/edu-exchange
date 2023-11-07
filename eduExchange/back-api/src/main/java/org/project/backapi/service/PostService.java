@@ -130,7 +130,7 @@ public class PostService {
 
     public PostDto hidePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(
-            
+                () -> new RessourceNotFoundException(String.format("Post: %d not found", postId))
         );
         if (post.getHidden().equals(true)) {
             throw new RejectedOperationException(String.format("The post: %d, has already been hidden", postId));
@@ -211,4 +211,16 @@ public class PostService {
         return new PagedResponse<>(dtos, posts.getNumber(), posts.getSize(), posts.getTotalElements(), posts.getTotalPages(), posts.isLast());
     }
 
+    public PostDto closePost(Long postId, User currentUser) {
+        Post post = postRepository.findById(postId).orElseThrow(
+                () -> new RessourceNotFoundException(String.format("Post: %d not found", postId))
+        );
+        if (post.getStatus().equals(PostStatus.CLOSED)) {
+            throw new RejectedOperationException(String.format("The post: %d, has already been closed", postId));
+        }
+        post.setStatus(PostStatus.CLOSED);
+        post = postRepository.save(post);
+
+        return postConverter.convert(post);
+    }
 }

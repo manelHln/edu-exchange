@@ -71,6 +71,7 @@ public class PostController {
         //notice that we only fetch visible posts
         return new ResponseEntity<>(postService.getAll(page, size,true), HttpStatus.OK);
     }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PagedResponse<PostDto>> readPosts(
@@ -134,6 +135,21 @@ public class PostController {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Post hidden successfully");
         response.put("post", hiddenPostDto);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{postId}/close")
+    @PreAuthorize("hasRole('STUDENT')")
+    public ResponseEntity<?> closePost(@PathVariable Long postId) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+
+        PostDto closedPostDto = postService.closePost(postId, currentUser);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Post closed successfully");
+        response.put("post", closedPostDto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -5,11 +5,11 @@ import org.project.backapi.converter.MessageConverter;
 import org.project.backapi.domain.Message;
 import org.project.backapi.dto.MessageDto;
 import org.project.backapi.repository.MessageRepository;
-import org.project.backapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +21,18 @@ public class MessageService {
     public List<Message> loadMessage() {
        return messageRepository.findAll();
     }
-    public MessageConverter searchMessage(Long id) {
+    public Optional<Message> searchMessage(Long id) {
         return messageRepository.findById(id);
     }
-    public MessageConverter sendMessage (MessageDto message) {
-       return messageRepository.save(message);
+    public  Message sendMessage (MessageDto messageDto) {
+        Message message = Message.builder()
+                .content(messageDto.getContent())
+                .sender()
+                .imagePaths()
+                .conversation()
+                .build();
+        return  messageRepository.save(message);
+
     }
 
 

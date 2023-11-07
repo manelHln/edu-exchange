@@ -7,7 +7,8 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class PostDto {
     private Long id;
     private String content;

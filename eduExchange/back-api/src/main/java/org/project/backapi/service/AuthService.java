@@ -18,62 +18,60 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    @Autowired
-    private final UserRepository userRepository;
-    @Autowired
-    private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private final JwtService jwtService;
-    @Autowired
-    private final AuthenticationManager authenticationManager;
+        @Autowired
+        private final UserRepository userRepository;
+        @Autowired
+        private final PasswordEncoder passwordEncoder;
+        @Autowired
+        private final JwtService jwtService;
+        @Autowired
+        private final AuthenticationManager authenticationManager;
 
-    public AuthResponse register(RegisterRequest request) {
-        try {
-            if (userRepository.existsByEmail(request.getEmail()))
-                throw new UserAuthenticationException("User already exists!");
-            User user = User.builder()
-                    .email(request.getEmail())
-                    .fullname(request.getFullname())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .pseudo(request.getPseudo())
-                    .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
-                    .teacherSpeciality(request.getTeacherSpeciality())
-                    .build();
-            userRepository.save(user);
-            var token = jwtService.generateToken(user);
-            return AuthResponse.builder()
-                    .token(token)
-                    .build();
-        } catch (UserAuthenticationException e) {
-            return AuthResponse.builder()
-                    .token(e.getMessage())
-                    .build();
+        public AuthResponse register(RegisterRequest request) {
+                try {
+                        if (userRepository.existsByEmail(request.getEmail()))
+                                throw new UserAuthenticationException("User already exists!");
+                        User user = User.builder()
+                                        .email(request.getEmail())
+                                        .fullname(request.getFullname())
+                                        .password(passwordEncoder.encode(request.getPassword()))
+                                        .pseudo(request.getPseudo())
+                                        .userRole(UserRole.valueOf(request.getRole().toUpperCase()))
+                                        .teacherSpeciality(request.getTeacherSpeciality())
+                                        .build();
+                        userRepository.save(user);
+                        var token = jwtService.generateToken(user);
+                        return AuthResponse.builder()
+                                        .token(token)
+                                        .build();
+                } catch (UserAuthenticationException e) {
+                        return AuthResponse.builder()
+                                        .token(e.getMessage())
+                                        .build();
+                }
         }
-    }
 
-public AuthResponse authenticate(AuthRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var token = jwtService.generateToken(user);
-        return AuthResponse.builder()
-                .token(token)
-                .build();
-    }
+        public AuthResponse authenticate(AuthRequest request) {
+                authenticationManager.authenticate(
+                                new UsernamePasswordAuthenticationToken(
+                                                request.getEmail(),
+                                                request.getPassword()));
+                User user = userRepository.findByEmail(request.getEmail())
+                                .orElseThrow();
+                var token = jwtService.generateToken(user);
+                return AuthResponse.builder()
+                                .token(token)
+                                .build();
+        }
 
-    public UserInfoResponse getUserInfo(String token) {
-        String username = jwtService.extractUsername(token);
-        User user = userRepository.findByEmail(username).orElseThrow();
-        return UserInfoResponse.builder()
-                .email(user.getEmail())
-                .fullname(user.getFullname())
-                .pseudo(user.getPseudo())
-                .id(user.getId())
-                .build();
-    }
+        public UserInfoResponse getUserInfo(String token) {
+                String username = jwtService.extractUsername(token);
+                User user = userRepository.findByEmail(username).orElseThrow();
+                return UserInfoResponse.builder()
+                                .email(user.getEmail())
+                                .fullname(user.getFullname())
+                                .pseudo(user.getPseudo())
+                                .id(user.getId())
+                                .build();
+        }
 }

@@ -14,7 +14,6 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -28,25 +27,24 @@ public class SecurityConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         corsConfiguration.setAllowedOrigins(List.of("*"));
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        corsConfiguration
+                .setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers(
-                                    "/api-docs/**",
-                                    "/auth/register",
-                                    "/auth/login",
-                                    "/swagger-ui/**"
-                                    )
-                                .permitAll()
-                                .anyRequest()
-                                //authenticated()
-                                .permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/api-docs/**",
+                                "/auth/register",
+                                "/auth/login",
+                                "/swagger-ui/**")
+                        .permitAll()
+                        .anyRequest()
+                        // authenticated()
+                        .permitAll()
 
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

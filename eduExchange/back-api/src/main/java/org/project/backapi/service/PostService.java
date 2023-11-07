@@ -32,13 +32,13 @@ public class PostService {
     PostConverter postConverter;
     @Autowired
     UserRepository userRepository;
-   @Autowired
-   TopicRepository topicRepository;
-
+    @Autowired
+    TopicRepository topicRepository;
 
     public PostDto createPost(PostDto dto) {
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RessourceNotFoundException(String.format("User: %d, not found",dto.getUserId())));
+                .orElseThrow(
+                        () -> new RessourceNotFoundException(String.format("User: %d, not found", dto.getUserId())));
 
         Set<Topic> topics = dto.getTopicNames().stream().map(name -> topicRepository.findByName(name).orElseGet(() -> {
             Topic newTopic = new Topic();
@@ -54,10 +54,12 @@ public class PostService {
 
     public PostDto updatePost(PostDto dto) {
         Post post = postRepository.findById(dto.getId())
-                .orElseThrow(() -> new RessourceNotFoundException(String.format("Post: %d does not exist",dto.getId())));
+                .orElseThrow(
+                        () -> new RessourceNotFoundException(String.format("Post: %d does not exist", dto.getId())));
 
         if (!Objects.equals(post.getUser().getId(), dto.getUserId())) {
-                throw  new RequestNotAuthorizedException(String.format("User: %d is not the author of post: %d, operation rejected",dto.getUserId(), dto.getId()));
+            throw new RequestNotAuthorizedException(String.format(
+                    "User: %d is not the author of post: %d, operation rejected", dto.getUserId(), dto.getId()));
         }
 
         post.setContent(dto.getContent());
@@ -78,41 +80,45 @@ public class PostService {
         return topicRepository.findAll(pageable);
     }
 
-    /*public Long getTotalPostCountForTopic(Topic topic) {
-        return postRepository.countByTopics(topic);
-    }*/
+    /*
+     * public Long getTotalPostCountForTopic(Topic topic) {
+     * return postRepository.countByTopics(topic);
+     * }
+     */
 
-    public List<PostDto> getAll (int page,int size, String sortBy) {
+    public List<PostDto> getAll(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         List<Post> posts = postRepository.findAll(pageable).getContent();
         return postConverter.convert(posts);
     }
 
     public PostDto getOne(Long postId) {
-        return postConverter.convert(postRepository.findById(postId).orElseThrow( () -> new RessourceNotFoundException(String.format("Post: %d not found", postId))));
+        return postConverter.convert(postRepository.findById(postId)
+                .orElseThrow(() -> new RessourceNotFoundException(String.format("Post: %d not found", postId))));
     }
 
     public List<PostDto> getUserPosts(Long userId, String pseudo, int page, int size) {
-        if(userRepository.findByPseudoOrId(pseudo, userId).isEmpty()) {
-            throw new RessourceNotFoundException(String.format("User: %s, does not exist", pseudo+userId));
+        if (userRepository.findByPseudoOrId(pseudo, userId).isEmpty()) {
+            throw new RessourceNotFoundException(String.format("User: %s, does not exist", pseudo + userId));
         }
 
         Pageable pageable = PageRequest.of(page, size);
         Set<Post> setPosts = userRepository.findByPseudoOrId(pseudo, userId).get().getPosts();
-        //Page<Post> pagedPosts = postRepository.findAll(new ArrayList<>(setPosts), pageable);
+        // Page<Post> pagedPosts = postRepository.findAll(new ArrayList<>(setPosts),
+        // pageable);
         Page<Post> pagedPosts = postRepository.findAll(pageable);
 
         return postConverter.convert(pagedPosts.getContent());
     }
 
     public List<PostDto> getTopicPosts(String topicName, int page, int size) {
-        if(topicRepository.findByName(topicName).isEmpty()) {
+        if (topicRepository.findByName(topicName).isEmpty()) {
             throw new RessourceNotFoundException(String.format("Topic: %s, does not exist", topicName));
         }
 
         Pageable pageable = PageRequest.of(page, size);
         Topic topic = topicRepository.findByName(topicName).get();
-        //Page<Post> pagedPosts = postRepository.findAll(topic.getPosts(), pageable);
+        // Page<Post> pagedPosts = postRepository.findAll(topic.getPosts(), pageable);
         Page<Post> pagedPosts = postRepository.findAll(pageable);
 
         return postConverter.convert(pagedPosts.getContent());

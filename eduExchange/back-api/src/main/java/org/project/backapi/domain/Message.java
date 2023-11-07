@@ -6,8 +6,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity @Table(name = "message")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Table(name = "message")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,12 +30,12 @@ public class Message {
     @Column(name = "image_paths", nullable = true)
     private List<String> imagePaths;
 
-    //relations
+    // relations
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id")
     private User sender;
 
-    //message belongs to a single conversation
+    // message belongs to a single conversation
     @ManyToOne
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;

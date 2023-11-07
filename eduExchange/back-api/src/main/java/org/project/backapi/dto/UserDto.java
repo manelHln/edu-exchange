@@ -8,8 +8,10 @@ import org.project.backapi.enums.UserRole;
 
 import java.time.LocalDate;
 
-@Getter @AllArgsConstructor
-@Setter @NoArgsConstructor
+@Getter
+@AllArgsConstructor
+@Setter
+@NoArgsConstructor
 public class UserDto {
     private Long id;
     private String email;

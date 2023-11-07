@@ -16,8 +16,7 @@ public class UserController {
     public ResponseEntity<?> getUserPosts(
             @PathVariable String userPseudo,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        return new ResponseEntity<>(postService.getUserPosts(0L,userPseudo,page, size), HttpStatus.OK);
+            @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(postService.getUserPosts(0L, userPseudo, page, size), HttpStatus.OK);
     }
 }

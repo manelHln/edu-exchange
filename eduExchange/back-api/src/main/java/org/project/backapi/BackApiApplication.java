@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.project.backapi.enums.UserRole.*;
 
-
 @SpringBootApplication
 @ComponentScan(basePackages = "org.project.backapi")
 public class BackApiApplication {
@@ -30,16 +29,14 @@ public class BackApiApplication {
                         .addMapping("/**")
                         .allowedOrigins("*")
                         .allowedMethods("*")
-                        .allowedHeaders("*")
-                ;
+                        .allowedHeaders("*");
             }
         };
     }
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            AuthService service
-    ) {
+            AuthService service) {
         return args -> {
             var admin = RegisterRequest.builder()
                     .fullname("Admin")
@@ -60,7 +57,7 @@ public class BackApiApplication {
                     .build();
             System.out.println("User token: " + service.register(teacher).getToken());
 
-            var student =RegisterRequest.builder()
+            var student = RegisterRequest.builder()
                     .fullname("Student")
                     .email("student@mail.com")
                     .password("password")

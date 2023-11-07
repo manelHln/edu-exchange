@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.project.backapi.domain.Topic;
 
-@Getter @Setter
+@Getter
+@Setter
 public class TopicDto {
     private Long id;
     private String name;

@@ -5,7 +5,10 @@ import lombok.*;
 import org.project.backapi.enums.VoteStatus;
 
 @Entity
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "vote")
 public class Vote {
     @Id
@@ -15,18 +18,16 @@ public class Vote {
 
     private VoteStatus status;
 
-    //relations
-    //vote belong to a single comment
+    // relations
+    // vote belong to a single comment
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-
-    //vote belong to a single user
+    // vote belong to a single user
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
-
 
     public void setVoteStatus(VoteStatus voteStatus) {
         this.status = voteStatus;

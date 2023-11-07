@@ -18,7 +18,7 @@ public class CommentConverter {
     public List<CommentDto> convert(List<Comment> comments) {
         ModelMapper modelMapper = new ModelMapper();
         List<CommentDto> converted = new ArrayList<>();
-        for(Comment comment: comments) {
+        for (Comment comment : comments) {
             converted.add(convert(comment));
         }
         return converted;

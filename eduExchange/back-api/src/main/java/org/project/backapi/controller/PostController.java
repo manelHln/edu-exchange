@@ -14,12 +14,12 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<?> save (@RequestBody PostDto request) {
+    public ResponseEntity<?> save(@RequestBody PostDto request) {
         return new ResponseEntity<>(postService.createPost(request), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> update (@RequestBody PostDto request) {
+    public ResponseEntity<?> update(@RequestBody PostDto request) {
         return new ResponseEntity<>(postService.updatePost(request), HttpStatus.OK);
     }
 
@@ -27,8 +27,7 @@ public class PostController {
     public ResponseEntity<?> getAllRecipes(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "content") String sortBy
-    ) {
+            @RequestParam(defaultValue = "content") String sortBy) {
         return new ResponseEntity<>(postService.getAll(page, size, sortBy), HttpStatus.OK);
     }
 
@@ -36,6 +35,5 @@ public class PostController {
     public ResponseEntity<?> getTopic(@PathVariable Long postId) {
         return new ResponseEntity<>(postService.getOne(postId), HttpStatus.OK);
     }
-
 
 }

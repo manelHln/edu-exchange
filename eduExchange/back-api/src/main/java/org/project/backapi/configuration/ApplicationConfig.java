@@ -1,6 +1,5 @@
 package org.project.backapi.configuration;
 
-
 import lombok.RequiredArgsConstructor;
 import org.project.backapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,9 @@ public class ApplicationConfig {
 
     @Autowired
     private UserRepository userRepository;
+
     @Bean
-    public UserDetailsService userDetailsService () {
+    public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,7 +44,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());

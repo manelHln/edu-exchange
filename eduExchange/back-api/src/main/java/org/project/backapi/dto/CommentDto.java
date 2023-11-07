@@ -1,6 +1,5 @@
 package org.project.backapi.dto;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.project.backapi.domain.User;
@@ -8,7 +7,8 @@ import org.project.backapi.domain.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CommentDto {
     private String content;
     private User user;

@@ -7,8 +7,13 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Entity @Table(name = "post") @Builder
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Table(name = "post")
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +35,8 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "post_topics",
-            joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(name = "post_topics", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
     private Set<Topic> topics;
 
     @PrePersist

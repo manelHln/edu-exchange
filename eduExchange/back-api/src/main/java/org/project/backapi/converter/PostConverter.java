@@ -29,7 +29,7 @@ public class PostConverter {
     public List<PostDto> convert(List<Post> posts) {
         ModelMapper modelMapper = new ModelMapper();
         List<PostDto> converted = new ArrayList<>();
-        for(Post post:posts) {
+        for (Post post : posts) {
             converted.add(convert(post));
         }
         return converted;
@@ -48,7 +48,7 @@ public class PostConverter {
 
     public List<Post> convert(List<PostDto> postDtos, User user, Set<Topic> topics) {
         List<Post> converted = new ArrayList<>();
-        for(PostDto postDto: postDtos) {
+        for (PostDto postDto : postDtos) {
             converted.add(convert(postDto, user, topics));
         }
 

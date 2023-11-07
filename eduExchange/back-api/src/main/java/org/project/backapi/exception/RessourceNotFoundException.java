@@ -1,8 +1,8 @@
 package org.project.backapi.exception;
 
-public class RessourceNotFoundException extends RuntimeException{
+public class RessourceNotFoundException extends RuntimeException {
 
-    public RessourceNotFoundException(String message){
+    public RessourceNotFoundException(String message) {
         super(message);
     }
 }

@@ -23,16 +23,14 @@ public class TopicController {
     public ResponseEntity<?> getTopicPosts(
             @PathVariable String topicName,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        return new ResponseEntity<>(postService.getTopicPosts(topicName,page,size), HttpStatus.OK);
+            @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(postService.getTopicPosts(topicName, page, size), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Page<TopicDto>>  getAllTopics(
+    public ResponseEntity<Page<TopicDto>> getAllTopics(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
+            @RequestParam(defaultValue = "10") int size) {
         Page<Topic> topicPage = postService.getAllTopics(page, size);
         List<TopicDto> topicDtos = topicPage.getContent().stream()
                 .map(TopicDto::new)

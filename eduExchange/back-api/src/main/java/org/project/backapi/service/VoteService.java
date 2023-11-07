@@ -17,6 +17,7 @@ public class VoteService {
     private final VoteRepository voteRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+
     @Autowired
     public VoteService(
             VoteRepository voteRepository,
@@ -44,13 +45,12 @@ public class VoteService {
         return voteRepository.countByCommentIdAndStatus(commentId, status);
     }
 
-    public long countTrueVotesByCommentId( Long commentId) {
+    public long countTrueVotesByCommentId(Long commentId) {
         return countVotesWithStatusByCommentId(commentId, VoteStatus.TRUE);
     }
 
-    public long countFalseVotesByCommentId( Long commentId) {
+    public long countFalseVotesByCommentId(Long commentId) {
         return countVotesWithStatusByCommentId(commentId, VoteStatus.FALSE);
     }
-
 
 }

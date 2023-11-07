@@ -20,20 +20,20 @@ public class JwtService {
     private static final String JWT_SECRET = "A1B2C3D4E5F6A7B8A1B2C3D4E5F6A7B8A1B2C3D4E5F6A7B8A1B2C3D4E5F6A7B8";
     private final long expirationTime = 3600000;
 
-    public String extractUsername(String jwtToken){
+    public String extractUsername(String jwtToken) {
         return extractClaim(jwtToken, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
@@ -46,7 +46,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public String generateToken(Map<String, Object> claims, UserDetails userDetails){
+    public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts
                 .builder()
                 .setClaims(claims)
@@ -57,7 +57,7 @@ public class JwtService {
                 .compact();
     }
 
-    private Claims extractAllClaims(String jwtToken){
+    private Claims extractAllClaims(String jwtToken) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSingnInKey())

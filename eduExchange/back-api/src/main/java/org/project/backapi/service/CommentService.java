@@ -27,16 +27,15 @@ public class CommentService {
     @Autowired
     private PostRepository postRepository;
 
-
-
     public String createComment(CommentDto commentDto, Long postId, Long userId) {
 
         // Recherche du post et de l'utilisateur en fonction de leurs IDs
         Post post = postRepository.findById(postId).orElseThrow(() -> new EntityNotFoundException("Post not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         Comment parentComment = null;
-        if(null != commentDto.getParentId()){
-            parentComment = commentRepository.findById(commentDto.getParentId()).orElseThrow(()-> new EntityNotFoundException("Comment not found"));
+        if (null != commentDto.getParentId()) {
+            parentComment = commentRepository.findById(commentDto.getParentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
         }
 
         Comment comment = Comment.builder()

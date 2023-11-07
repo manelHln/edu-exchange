@@ -6,7 +6,6 @@ public enum VoteStatus {
 
     private final int value;
 
-
     VoteStatus(int value) {
         this.value = value;
     }
@@ -15,15 +14,13 @@ public enum VoteStatus {
         return value;
     }
 
-        public static VoteStatus fromInt(VoteStatus value) {
-            for (VoteStatus status : VoteStatus.values()) {
-                if (status.getValue() == value) {
-                    return status;
-                }
+    public static VoteStatus fromInt(VoteStatus value) {
+        for (VoteStatus status : VoteStatus.values()) {
+            if (status.getValue() == value) {
+                return status;
             }
-            throw new IllegalArgumentException("Invalid value : " + value);
         }
+        throw new IllegalArgumentException("Invalid value : " + value);
+    }
 
 }
-
-

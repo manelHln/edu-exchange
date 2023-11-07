@@ -1,5 +1,6 @@
 package org.project.backapi.service;
 
+import com.sun.security.auth.UserPrincipal;
 import jakarta.persistence.EntityNotFoundException;
 import org.project.backapi.converter.CommentConverter;
 import org.project.backapi.domain.Comment;
@@ -103,5 +104,10 @@ public class CommentService {
     public String delete(Long id) {
         commentRepository.deleteById(id);
         return "Comment deleted successfully";
+    }
+
+    public Comment createComment(CommentDto commentDto, User userPrincipal) {
+        Post post = postRepository.findById(commentDto.getPostId()).get();
+        return commentRepository.save(commentConverter.convert(commentDto, userPrincipal,null,post));
     }
 }

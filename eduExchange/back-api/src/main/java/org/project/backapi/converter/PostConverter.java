@@ -20,6 +20,9 @@ public class PostConverter {
         dto.setImagePaths(post.getImagePaths());
         dto.setUserId(post.getUser().getId());
         dto.setTopicNames(post.getTopics().stream().map(Topic::getName).collect(Collectors.toSet()));
+        dto.setTitle(post.getTitle());
+        dto.setCreatedAt(post.getCreatedAt());
+        dto.setUpdatedAt(post.getUpdatedAt());
 
         return dto;
     }
@@ -30,17 +33,17 @@ public class PostConverter {
         for(Post post:posts) {
             converted.add(convert(post));
         }
+
         return converted;
     }
 
     public Post convert(PostDto dto, User user, List<Topic> topics) {
         Post post = new Post();
-        //post.setId(dto.getId());
         post.setContent(dto.getContent());
         post.setImagePaths(dto.getImagePaths());
         post.setUser(user);
         post.setTopics(topics);
-
+        post.setTitle(dto.getTitle());
         return post;
     }
 

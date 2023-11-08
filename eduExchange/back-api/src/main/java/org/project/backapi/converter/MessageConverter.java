@@ -1,9 +1,7 @@
 package org.project.backapi.converter;
 
 import org.modelmapper.ModelMapper;
-import org.project.backapi.domain.Conversation;
 import org.project.backapi.domain.Message;
-import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.MessageDto;
 import org.springframework.stereotype.Component;
 
@@ -13,21 +11,8 @@ import java.util.List;
 @Component
 public class MessageConverter {
     public MessageDto convert(Message message) {
-        MessageDto dto = new MessageDto();
-        dto.setId(message.getId());
-        dto.setContent(message.getContent());
-        dto.setCreatedAt(message.getCreateAt());
-        dto.setUpdateAt(message.getUpdateAt());
-        dto.setAuthorId(message.getAuthorId());
-        dto.setConversationId(message.getConversation().getId());
-        return dto ;
-    }
-    public Message convert (MessageDto messageDto , Conversation conversation, User sender) {
-        Message message = new Message();
-        message.setContent(messageDto.getContent());
-        message.setSender(sender);
-        message.setConversation(conversation);
-        return message;
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(message, MessageDto.class);
     }
 
     public List<MessageDto> convert(List<Message> messages) {

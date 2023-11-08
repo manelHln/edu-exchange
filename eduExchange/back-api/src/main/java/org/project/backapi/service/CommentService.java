@@ -6,6 +6,8 @@ import org.project.backapi.domain.Post;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.CommentDto;
 import org.project.backapi.dto.response.PagedResponse;
+import org.project.backapi.enums.PostStatus;
+import org.project.backapi.exception.ForbiddenAccessOperation;
 import org.project.backapi.exception.RessourceNotFoundException;
 import org.project.backapi.repository.CommentRepository;
 import org.project.backapi.repository.PostRepository;
@@ -36,6 +38,9 @@ public class CommentService {
         Post post = postRepository.findById(commentDto.getPostId())
                 .orElseThrow(() -> new RessourceNotFoundException(String.format("Post: %d does not exist", commentDto.getPostId())));
 
+        if(post.getHidden() || post.getStatus().equals(PostStatus.CLOSED)) {
+            throw new ForbiddenAccessOperation(String.format("You can no longer perform comment on this post"));
+        }
         Comment parentComment = null;
         if (commentDto.getParentId() != null) {
             parentComment = commentRepository.findById(commentDto.getParentId())

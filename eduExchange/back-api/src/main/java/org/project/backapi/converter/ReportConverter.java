@@ -16,7 +16,7 @@ public class ReportConverter {
         ReportDto dto = new ReportDto();
         dto.setId(report.getId());
         dto.setPostId(report.getPost().getId());
-        dto.setReporterId(dto.getReporterId());
+        dto.setReporterId(report.getReporter().getId());
         dto.setReason(report.getReason());
         dto.setCreatedAt(report.getCreatedAt());
 

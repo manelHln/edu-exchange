@@ -1,6 +1,5 @@
 package org.project.backapi.controller;
 
-import com.sun.security.auth.UserPrincipal;
 import jakarta.validation.Valid;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.CommentDto;

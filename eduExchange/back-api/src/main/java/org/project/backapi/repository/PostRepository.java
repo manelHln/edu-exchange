@@ -3,6 +3,7 @@ package org.project.backapi.repository;
 
 import org.project.backapi.domain.Post;
 import org.project.backapi.domain.Topic;
+import org.project.backapi.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,5 +28,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findByTopicsName(String topicName, Pageable pageable);
 
+
+    Page<Post> findByUserPseudo(String pseudo, Pageable pageable);
+
+    Post findByUser(User currentUser);
 
 }

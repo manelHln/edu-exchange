@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface ConversationRepository extends JpaRepository<Conversation ,Long> {
     Page<Conversation> findByMessagesContentContaining(String text, Pageable pageable);
 
@@ -18,4 +20,5 @@ public interface ConversationRepository extends JpaRepository<Conversation ,Long
     @Query("SELECT c FROM Conversation c WHERE c.initiator = :user OR c.receiver = :user")
     Page<Conversation> findByInitiatorOrReceiver(@Param("user") User user, Pageable pageable);
 
+    Optional<Conversation> findByInitiatorAndReceiver(User initiator, User receiver);
 }

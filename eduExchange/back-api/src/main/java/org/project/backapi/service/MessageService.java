@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MessageService {
@@ -93,8 +94,17 @@ public class MessageService {
             if(conversationId == null){
                 User receiver = userRepository.findById(receiverId).orElseThrow(
                         () -> new RessourceNotFoundException(String.format("You can not send messages to absent user: %d", receiverId)));
-                conversation = conversationConverter.convert(sender, receiver);
-                conversation = conversationRepository.save(conversation);
+
+                // Find the existing conversation between the sender and receiver
+                Optional<Conversation> existingConversation = conversationRepository.findByInitiatorAndReceiver(sender, receiver)
+                        .or(() -> conversationRepository.findByInitiatorAndReceiver(receiver, sender));
+
+                if (existingConversation.isPresent()) {
+                    conversation = existingConversation.get();
+                } else {
+                    conversation = conversationConverter.convert(sender, receiver);
+                    conversation = conversationRepository.save(conversation);
+                }
             }
             else {
                 conversation = conversationRepository.findById(conversationId).orElseThrow(

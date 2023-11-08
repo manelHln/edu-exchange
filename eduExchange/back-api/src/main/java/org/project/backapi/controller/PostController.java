@@ -172,13 +172,4 @@ public class PostController {
         return new ResponseEntity<>(reportService.getAllPostReports(postId, page, size), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{userPseudo}")
-    public ResponseEntity<?> getUserPosts(
-            @PathVariable String userPseudo,
-            @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
-
-        return new ResponseEntity<>(postService.getUserPosts(userPseudo, page, size), HttpStatus.OK);
-    }
-
 }

@@ -45,23 +45,6 @@ public class PostService {
     @Autowired
     TopicRepository topicRepository;
 
-    /*public PostDto createPost(PostDto dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(
-                        () -> new RessourceNotFoundException(String.format("User: %d, not found", dto.getUserId())));
-
-        List<Topic> topics = dto.getTopicNames().stream().map(name -> topicRepository.findByName(name).orElseGet(() -> {
-            Topic newTopic = new Topic();
-            newTopic.setName(name);
-            return topicRepository.save(newTopic);
-        })).collect(Collectors.toList());
-
-        Post post = postConverter.convert(dto, user, topics);
-        post = postRepository.save(post);
-
-        return postConverter.convert(post);
-    }*/
-
     public PostDto createPost(PostDto dto, User currentUser) {
         List<Topic> topics = dto.getTopicNames().stream().map(name -> topicRepository.findByName(name).orElseGet(() -> {
             Topic newTopic = new Topic();
@@ -74,29 +57,6 @@ public class PostService {
 
         return postConverter.convert(post);
     }
-
-    /*public PostDto updatePost(PostDto dto) {
-        Post post = postRepository.findById(dto.getId())
-                .orElseThrow(
-                        () -> new RessourceNotFoundException(String.format("Post: %d does not exist", dto.getId())));
-
-        if (!Objects.equals(post.getUser().getId(), dto.getUserId())) {
-            throw new RequestNotAuthorizedException(String.format(
-                    "User: %d is not the author of post: %d, operation rejected", dto.getUserId(), dto.getId()));
-        }
-
-        post.setContent(dto.getContent());
-        post.setImagePaths(dto.getImagePaths());
-        post.setTopics(dto.getTopicNames().stream().map(name -> topicRepository.findByName(name).orElseGet(() -> {
-            Topic newTopic = new Topic();
-            newTopic.setName(name);
-            return topicRepository.save(newTopic);
-        })).collect(Collectors.toList()));
-
-        post = postRepository.save(post);
-
-        return postConverter.convert(post);
-    }*/
 
     public PostDto updatePost(PostDto dto, Long postId, User currentUser) {
         Post post = postRepository.findById(postId)
@@ -180,11 +140,13 @@ public class PostService {
 
     public PagedResponse<PostDto> getUserPosts(String pseudo, int page, int size) {
         AppUtils.validatePageNumberAndSize(page, size);
-        User user = userRepository.findByPseudo(pseudo).orElseThrow();
-        Set<Post> setPosts = user.getPosts();
+
+        User user = userRepository.findByPseudo(pseudo).orElseThrow(
+                () -> new RessourceNotFoundException(String.format("User: %s, does not exist", pseudo)));
 
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findByUserPseudo(pseudo, pageable);
+
         if (posts.isEmpty()) {
             return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);
         }
@@ -215,9 +177,18 @@ public class PostService {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new RessourceNotFoundException(String.format("Post: %d not found", postId))
         );
+
+        if(post.getHidden()) {
+            throw new ForbiddenAccessOperation(String.format("You can no longer perform comment on this post"));
+        }
         if (post.getStatus().equals(PostStatus.CLOSED)) {
             throw new RejectedOperationException(String.format("The post: %d, has already been closed", postId));
         }
+
+        if (!Objects.equals(post.getUser().getId(), currentUser.getId())) {
+            throw new RequestNotAuthorizedException(String.format(AppConstants.YOU_ARE_NOT_THE_AUTHOR_OF_THIS + " post"));
+        }
+
         post.setStatus(PostStatus.CLOSED);
         post = postRepository.save(post);
 

@@ -4,13 +4,11 @@ import org.project.backapi.domain.Conversation;
 import org.project.backapi.domain.Message;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.ConversationDto;
-import org.project.backapi.dto.modelsDto.MessageDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ConversationConverter {

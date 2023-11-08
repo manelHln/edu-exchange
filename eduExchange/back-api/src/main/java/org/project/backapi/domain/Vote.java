@@ -20,6 +20,8 @@ public class Vote {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private VoteStatus status;
 
     @CreatedDate
@@ -32,7 +34,7 @@ public class Vote {
 
     // relations
     // vote belong to a single comment
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
@@ -50,5 +52,9 @@ public class Vote {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = Instant.now();
+    }
+
+    public void setVoteStatus(VoteStatus voteStatus) {
+        this.status = voteStatus;
     }
 }

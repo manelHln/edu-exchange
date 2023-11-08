@@ -1,5 +1,6 @@
 package org.project.backapi.enums;
 
 public enum VoteStatus {
-    TRUE, FALSE
+    TRUE,
+    FALSE
 }

@@ -18,7 +18,7 @@ public class VoteConverter {
     public List<VoteDto> convert(List<Vote> votes) {
         ModelMapper modelMapper = new ModelMapper();
         List<VoteDto> converted = new ArrayList<>();
-        for(Vote vote:votes) {
+        for (Vote vote : votes) {
             converted.add(convert(vote));
         }
         return converted;

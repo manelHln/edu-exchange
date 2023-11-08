@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.project.backapi.enums.UserRole.*;
 
-
 @SpringBootApplication
 @ComponentScan(basePackages = "org.project.backapi")
 public class BackApiApplication {
@@ -30,42 +29,40 @@ public class BackApiApplication {
                         .addMapping("/**")
                         .allowedOrigins("*")
                         .allowedMethods("*")
-                        .allowedHeaders("*")
-                ;
+                        .allowedHeaders("*");
             }
         };
     }
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            AuthService service
-    ) {
+            AuthService service) {
         return args -> {
             var admin = RegisterRequest.builder()
                     .fullname("Admin")
                     .email("admin@mail.com")
                     .password("password")
                     .role(String.valueOf(ADMIN))
-                    .pseudo("first user")
+                    .pseudo("super-user")
                     .build();
             System.out.println("Admin token: " + service.register(admin).getToken());
 
             var teacher = RegisterRequest.builder()
                     .fullname("Teacher")
                     .email("teacher@mail.com")
-                        .password("password")
+                    .password("password")
                     .role(String.valueOf(TEACHER))
                     .teacherSpeciality("Mathematics")
-                    .pseudo("first teacher second user")
+                    .pseudo("first-teacher")
                     .build();
-            System.out.println("User token: " + service.register(teacher).getToken());
+            System.out.println("Teacher token: " + service.register(teacher).getToken());
 
-            var student =RegisterRequest.builder()
+            var student = RegisterRequest.builder()
                     .fullname("Student")
                     .email("student@mail.com")
                     .password("password")
                     .role(String.valueOf(STUDENT))
-                    .pseudo("first student third  user")
+                    .pseudo("first-student")
                     .build();
             System.out.println("Student token: " + service.register(student).getToken());
         };

@@ -8,8 +8,12 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.util.Set;
 
-@Entity @Table(name = "conversation")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Table(name = "conversation")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Conversation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

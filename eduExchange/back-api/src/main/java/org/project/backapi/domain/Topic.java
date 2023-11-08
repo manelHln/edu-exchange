@@ -5,9 +5,13 @@ import lombok.*;
 
 import java.util.List;
 
-@Entity @Table(name = "topic")
-@Getter @Setter @Builder
-@AllArgsConstructor @NoArgsConstructor
+@Entity
+@Table(name = "topic")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

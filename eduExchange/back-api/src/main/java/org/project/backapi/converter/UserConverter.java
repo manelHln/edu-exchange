@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserConverter {
-   public UserDto convert (User user) {
+    public UserDto convert(User user) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map (user, UserDto.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     public List<UserDto> convert(List<User> users) {
         ModelMapper modelMapper = new ModelMapper();
-        List <UserDto> converted = new ArrayList<>();
+        List<UserDto> converted = new ArrayList<>();
         for (User user : users) {
             converted.add(convert(user));
         }

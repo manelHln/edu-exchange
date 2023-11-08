@@ -1,6 +1,5 @@
 package org.project.backapi.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.project.backapi.converter.CommentConverter;
 import org.project.backapi.domain.Comment;
 import org.project.backapi.domain.Post;
@@ -33,26 +32,19 @@ public class CommentService {
     @Autowired
     private CommentConverter commentConverter;
 
-    public CommentDto createComment(CommentDto commentDto) {
-
-        // Recherche du post et de l'utilisateur en fonction de leurs IDs
+    public CommentDto createComment(CommentDto commentDto, User author) {
         Post post = postRepository.findById(commentDto.getPostId())
-                .orElseThrow(() -> new RessourceNotFoundException(
-                        String.format("Post: %d does not exist", commentDto.getPostId())));
-        User author = userRepository.findById(commentDto.getAuthorId())
-                .orElseThrow(() -> new RessourceNotFoundException(String.format(
-                        "User: %d, does not exist.", commentDto.getAuthorId())));
+                .orElseThrow(() -> new RessourceNotFoundException(String.format("Post: %d does not exist", commentDto.getPostId())));
+
         Comment parentComment = null;
         if (commentDto.getParentId() != null) {
             parentComment = commentRepository.findById(commentDto.getParentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+                    .orElseThrow(() -> new RessourceNotFoundException(String.format("Provided comment parent: %d does not exist", commentDto.getParentId())));
         }
 
         Comment comment = commentConverter.convert(commentDto, author, parentComment, post);
-        // Enregistrer le commentaire dans la base de données
         Comment savedComment = commentRepository.save(comment);
 
-        // Convertir l'entité Comment en CommentDto et le renvoyer
         return commentConverter.convert(comment);
     }
 
@@ -75,14 +67,15 @@ public class CommentService {
                 })
                 .toList();
 
-        return new PagedResponse<>(rootCommentDtos, rootCommentsPage.getNumber(), rootCommentsPage.getSize(), rootCommentsPage.getTotalElements(), rootCommentsPage.getTotalPages(), rootCommentsPage.isLast());
+        return new PagedResponse<>(rootCommentDtos, rootCommentsPage.getNumber(), rootCommentsPage.getSize(),
+                rootCommentsPage.getTotalElements(), rootCommentsPage.getTotalPages(), rootCommentsPage.isLast());
 
     }
 
     public List<CommentDto> getRepliesToComment(Long commentId) {
         List<Comment> replies = commentRepository.findByParentId(commentId);
 
-        //return commentConverter.convert(commentRepository.findByParentId(commentId));
+        // return commentConverter.convert(commentRepository.findByParentId(commentId));
         return replies.stream()
                 .map(reply -> {
                     CommentDto dto = commentConverter.convert(reply);
@@ -92,16 +85,23 @@ public class CommentService {
                 .toList();
     }
 
-    public CommentDto updateComment(Long commentId, String newContent) {
+    public CommentDto updateComment(Long commentId, String newContent, User currentUser) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RessourceNotFoundException(String.format("Comment: %d does not exist ", commentId)));
+                .orElseThrow(
+                        () -> new RessourceNotFoundException(String.format("Comment: %d does not exist ", commentId)));
         comment.setContent(newContent);
         Comment updatedComment = commentRepository.save(comment);
 
         return commentConverter.convert(updatedComment);
     }
+
     public String delete(Long id) {
         commentRepository.deleteById(id);
         return "Comment deleted successfully";
     }
+
+    /*public Comment createComment(CommentDto commentDto, User currentUser) {
+        Post post = postRepository.findById(commentDto.getPostId()).get();
+        return commentRepository.save(commentConverter.convert(commentDto, userPrincipal, null, post));
+    }*/
 }

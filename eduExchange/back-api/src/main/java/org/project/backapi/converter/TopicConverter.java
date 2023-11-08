@@ -18,7 +18,7 @@ public class TopicConverter {
     public List<TopicDto> convert(List<Topic> topics) {
         ModelMapper modelMapper = new ModelMapper();
         List<TopicDto> converted = new ArrayList<>();
-        for(Topic topic: topics) {
+        for (Topic topic : topics) {
             converted.add(convert(topic));
         }
         return converted;

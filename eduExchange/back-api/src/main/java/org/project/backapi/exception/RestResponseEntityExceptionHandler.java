@@ -39,5 +39,18 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
+    @ExceptionHandler(value = RejectedOperationException.class)
+    @ResponseStatus(HttpStatus.ALREADY_REPORTED)
+    public @ResponseBody
+    ErrorResponse handleBadRequestException(RejectedOperationException ex) {
+        return new ErrorResponse(HttpStatus.ALREADY_REPORTED.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = ForbiddenAccessOperation.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public @ResponseBody
+    ErrorResponse handleBadRequestException(ForbiddenAccessOperation ex) {
+        return new ErrorResponse(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+    }
 
 }

@@ -22,4 +22,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Long countByTopics(@Param("topic") Topic topic);/**/
 
     Page<Post> findByTopics(Topic topic, Pageable pageable);
+
+    Page<Post> findByHiddenFalse(Pageable pageable);
+
+    Page<Post> findByTopicsName(String topicName, Pageable pageable);
+
+
 }

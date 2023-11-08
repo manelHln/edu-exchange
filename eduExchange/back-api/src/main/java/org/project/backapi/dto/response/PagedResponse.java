@@ -1,13 +1,12 @@
 package org.project.backapi.dto.response;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PagedResponse <T>{
+public class PagedResponse<T> {
     private List<T> content;
     private int page;
     private int size;
@@ -28,7 +27,7 @@ public class PagedResponse <T>{
         this.last = last;
     }
 
-    public List<T> getContent () {
+    public List<T> getContent() {
 
         return content == null ? null : new ArrayList<>(content);
     }

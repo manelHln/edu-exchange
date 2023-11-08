@@ -5,6 +5,7 @@ import org.project.backapi.domain.Post;
 import org.project.backapi.domain.Topic;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.PostDto;
+import org.project.backapi.enums.PostStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,6 +21,11 @@ public class PostConverter {
         dto.setImagePaths(post.getImagePaths());
         dto.setUserId(post.getUser().getId());
         dto.setTopicNames(post.getTopics().stream().map(Topic::getName).collect(Collectors.toSet()));
+        dto.setTitle(post.getTitle());
+        dto.setCreatedAt(post.getCreatedAt());
+        dto.setUpdatedAt(post.getUpdatedAt());
+        dto.setStatus(post.getStatus());
+        dto.setHidden(post.getHidden());
 
         return dto;
     }
@@ -27,26 +33,26 @@ public class PostConverter {
     public List<PostDto> convert(List<Post> posts) {
         ModelMapper modelMapper = new ModelMapper();
         List<PostDto> converted = new ArrayList<>();
-        for(Post post:posts) {
+        for (Post post : posts) {
             converted.add(convert(post));
         }
+
         return converted;
     }
 
     public Post convert(PostDto dto, User user, List<Topic> topics) {
         Post post = new Post();
-        //post.setId(dto.getId());
         post.setContent(dto.getContent());
         post.setImagePaths(dto.getImagePaths());
         post.setUser(user);
         post.setTopics(topics);
-
+        post.setTitle(dto.getTitle());
         return post;
     }
 
     public List<Post> convert(List<PostDto> postDtos, User user, List<Topic> topics) {
         List<Post> converted = new ArrayList<>();
-        for(PostDto postDto: postDtos) {
+        for (PostDto postDto : postDtos) {
             converted.add(convert(postDto, user, topics));
         }
 

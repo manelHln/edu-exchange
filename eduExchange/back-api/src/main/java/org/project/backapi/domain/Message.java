@@ -9,8 +9,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity @Table(name = "message")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Entity
+@Table(name = "message")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,9 +36,16 @@ public class Message {
     @Column(name = "image_paths", nullable = true)
     private List<String> imagePaths;
 
+<<<<<<< HEAD
+    // relations
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sender_id")
+    private User sender;
+=======
     //relations
+>>>>>>> c4ad93a4656b1e29652b5749d4e6540ddd33b357
 
-    //message belongs to a single conversation
+    // message belongs to a single conversation
     @ManyToOne
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;
@@ -46,5 +57,7 @@ public class Message {
     }
 
     @PreUpdate
-    protected void onUpdate() { updatedAt = Instant.now(); }
+    protected void onUpdate() {
+        updatedAt = Instant.now();
+    }
 }

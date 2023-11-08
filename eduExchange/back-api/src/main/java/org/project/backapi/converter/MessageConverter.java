@@ -35,7 +35,7 @@ public class MessageConverter {
     public List<MessageDto> convert(List<Message> messages) {
         ModelMapper modelMapper = new ModelMapper();
         List<MessageDto> converted = new ArrayList<>();
-        for(Message message: messages) {
+        for (Message message : messages) {
             converted.add(convert(message));
         }
         return converted;

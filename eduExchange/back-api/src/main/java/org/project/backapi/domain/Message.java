@@ -36,14 +36,10 @@ public class Message {
     @Column(name = "image_paths", nullable = true)
     private List<String> imagePaths;
 
-<<<<<<< HEAD
     // relations
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id")
     private User sender;
-=======
-    //relations
->>>>>>> c4ad93a4656b1e29652b5749d4e6540ddd33b357
 
     // message belongs to a single conversation
     @ManyToOne

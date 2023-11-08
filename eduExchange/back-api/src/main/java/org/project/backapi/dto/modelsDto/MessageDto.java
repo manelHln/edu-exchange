@@ -2,7 +2,6 @@ package org.project.backapi.dto.modelsDto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.authentication.AuthenticationManager;
 
 import java.time.Instant;
 
@@ -15,6 +14,5 @@ public class MessageDto {
     private Instant createdAt;
     private Instant updatedAt;
     private Long authorId;
-    private Long receiverId;
-    private Long conversationId;
+    private  Long conversationId;
 }

@@ -16,18 +16,17 @@ public class MessageConverter {
         MessageDto dto = new MessageDto();
         dto.setId(message.getId());
         dto.setContent(message.getContent());
-        dto.setCreatedAt(message.getCreatedAt());
-        dto.setUpdatedAt(message.getUpdatedAt());
-        dto.setAuthorId(message.getConversation().getInitiator().getId());
+        dto.setCreatedAt(message.getCreateAt());
+        dto.setUpdateAt(message.getUpdateAt());
+        dto.setAuthorId(message.getAuthorId());
         dto.setConversationId(message.getConversation().getId());
-
         return dto ;
     }
-    public Message convert (MessageDto messageDto , Conversation conversation) {
+    public Message convert (MessageDto messageDto , Conversation conversation, User sender) {
         Message message = new Message();
         message.setContent(messageDto.getContent());
+        message.setSender(sender);
         message.setConversation(conversation);
-
         return message;
     }
 

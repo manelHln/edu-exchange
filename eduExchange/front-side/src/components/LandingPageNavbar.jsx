@@ -6,15 +6,34 @@ import { MenuIcon } from "lucide-react";
 import { XIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
+const navLinks = [
+  {
+    name: "Features",
+    href: "#features"
+  },
+  {
+    name: "About",
+    href: "#about"
+  },
+  {
+    name: "Chat",
+    href: "/chat"
+  },
+  {
+    name: "Posts",
+    href: "/posts"
+  },
+]
+
 const LandingPageNavbar = () => {
   const [toggleMobileNav, setToggleMobileNav] = useState(false);
   return (
     <div className="sticky top-0 flex justify-between items-center px-8 py-4 sm:px-40 shadow-sm bg-white w-full z-10">
       <div>edu.Exchange</div>
       <ul className="hidden sm:flex items-center gap-8 text-sm">
-        {["Demos", "About", "Blog", "Pages"].map((e, i) => (
-          <li key={`${e}-${i}`}>
-            <Link href={"/"}>{e}</Link>
+        {navLinks.map((e, i) => (
+          <li key={`${e.name}-${i}`}>
+            <Link href={e.href}>{e.name}</Link>
           </li>
         ))}
       </ul>
@@ -27,6 +46,7 @@ const LandingPageNavbar = () => {
         <Button
           text={"Get started Now"}
           className="cursor-pointer py-2 px-4 rounded-md text-white bg-custom-orange text-sm"
+          to="register"
         />
       </div>
 

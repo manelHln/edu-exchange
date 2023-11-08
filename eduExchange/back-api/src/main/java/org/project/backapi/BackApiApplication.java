@@ -1,6 +1,6 @@
 package org.project.backapi;
 
-import org.project.backapi.dto.RegisterRequest;
+import org.project.backapi.dto.request.RegisterRequest;
 import org.project.backapi.service.AuthService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -43,7 +43,7 @@ public class BackApiApplication {
                     .email("admin@mail.com")
                     .password("password")
                     .role(String.valueOf(ADMIN))
-                    .pseudo("first user")
+                    .pseudo("super-user")
                     .build();
             System.out.println("Admin token: " + service.register(admin).getToken());
 
@@ -53,16 +53,16 @@ public class BackApiApplication {
                     .password("password")
                     .role(String.valueOf(TEACHER))
                     .teacherSpeciality("Mathematics")
-                    .pseudo("first teacher second user")
+                    .pseudo("first-teacher")
                     .build();
-            System.out.println("User token: " + service.register(teacher).getToken());
+            System.out.println("Teacher token: " + service.register(teacher).getToken());
 
             var student = RegisterRequest.builder()
                     .fullname("Student")
                     .email("student@mail.com")
                     .password("password")
                     .role(String.valueOf(STUDENT))
-                    .pseudo("first student third  user")
+                    .pseudo("first-student")
                     .build();
             System.out.println("Student token: " + service.register(student).getToken());
         };

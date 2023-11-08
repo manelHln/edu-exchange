@@ -13,10 +13,18 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    // Page<Post> findAll(List<Post> setPosts, Pageable pageable);
+    //Page<Post> findAll(List<Post> setPosts, Pageable pageable);
+
     Page<Post> findAll(Pageable pageable);
 
-    @Query("SELECT COUNT(p) FROM Post p JOIN p.topics t WHERE t = :topic")
-    Long countByTopics(@Param("topic") Topic topic);
+    /*@Query("SELECT COUNT(p) FROM Post p JOIN p.topic t WHERE t = :topic")
+    Long countByTopics(@Param("topic") Topic topic);/**/
+
+    Page<Post> findByTopics(Topic topic, Pageable pageable);
+
+    Page<Post> findByHiddenFalse(Pageable pageable);
+
+    Page<Post> findByTopicsName(String topicName, Pageable pageable);
+
 
 }

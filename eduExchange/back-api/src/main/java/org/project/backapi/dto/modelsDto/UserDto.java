@@ -1,4 +1,4 @@
-package org.project.backapi.dto;
+package org.project.backapi.dto.modelsDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

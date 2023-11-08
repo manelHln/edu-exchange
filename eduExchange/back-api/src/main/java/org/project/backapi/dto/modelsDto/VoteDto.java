@@ -1,4 +1,4 @@
-package org.project.backapi.dto;
+package org.project.backapi.dto.modelsDto;
 
 import lombok.Data;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import org.project.backapi.enums.VoteStatus;
 
 @Getter
 @Setter
-@Data
 public class VoteDto {
     private Long id;
     private VoteStatus status;

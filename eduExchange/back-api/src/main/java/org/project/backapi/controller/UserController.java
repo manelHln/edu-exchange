@@ -12,11 +12,15 @@ public class UserController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/{userPseudo}/posts")
+    /*@GetMapping("/{userPseudo}/posts")
     public ResponseEntity<?> getUserPosts(
             @PathVariable String userPseudo,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(postService.getUserPosts(0L, userPseudo, page, size), HttpStatus.OK);
+<<<<<<< HEAD
     }
+=======
+    }*/
+>>>>>>> 6178dc7ba9399602d2d5af4beef86e938c077031
 }

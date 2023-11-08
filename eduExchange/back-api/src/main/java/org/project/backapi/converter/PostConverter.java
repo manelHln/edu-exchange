@@ -4,12 +4,12 @@ import org.modelmapper.ModelMapper;
 import org.project.backapi.domain.Post;
 import org.project.backapi.domain.Topic;
 import org.project.backapi.domain.User;
-import org.project.backapi.dto.Post.PostDto;
+import org.project.backapi.dto.modelsDto.PostDto;
+import org.project.backapi.enums.PostStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,9 +19,13 @@ public class PostConverter {
         dto.setId(post.getId());
         dto.setContent(post.getContent());
         dto.setImagePaths(post.getImagePaths());
-        dto.setCreatedAt(post.getCreatedAt());
         dto.setUserId(post.getUser().getId());
         dto.setTopicNames(post.getTopics().stream().map(Topic::getName).collect(Collectors.toSet()));
+        dto.setTitle(post.getTitle());
+        dto.setCreatedAt(post.getCreatedAt());
+        dto.setUpdatedAt(post.getUpdatedAt());
+        dto.setStatus(post.getStatus());
+        dto.setHidden(post.getHidden());
 
         return dto;
     }
@@ -32,21 +36,21 @@ public class PostConverter {
         for (Post post : posts) {
             converted.add(convert(post));
         }
+
         return converted;
     }
 
-    public Post convert(PostDto dto, User user, Set<Topic> topics) {
+    public Post convert(PostDto dto, User user, List<Topic> topics) {
         Post post = new Post();
-        post.setId(dto.getId());
         post.setContent(dto.getContent());
         post.setImagePaths(dto.getImagePaths());
         post.setUser(user);
         post.setTopics(topics);
-
+        post.setTitle(dto.getTitle());
         return post;
     }
 
-    public List<Post> convert(List<PostDto> postDtos, User user, Set<Topic> topics) {
+    public List<Post> convert(List<PostDto> postDtos, User user, List<Topic> topics) {
         List<Post> converted = new ArrayList<>();
         for (PostDto postDto : postDtos) {
             converted.add(convert(postDto, user, topics));

@@ -26,9 +26,10 @@ const Banner = () => {
             text="Start chatting now"
             className="cursor-pointer py-4 px-6 rounded-md text-white bg-custom-orange text-sm flex items-center gap-2"
             endIcon={<ArrowRight />}
+            to={"/chat"}
           />
         </div>
-        <div className="flex gap-4 items-center">
+        {/* <div className="flex gap-4 items-center">
           <div>
             <Image src={people} alt="people" width="100%" height="100%" />
           </div>
@@ -50,7 +51,7 @@ const Banner = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-1 items-center w-full">
         <Image src={bannerImg} width="100%" height="100%" alt="hero image" />

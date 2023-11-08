@@ -11,6 +11,14 @@ const buttonAttributes = {
   text: "Start chatting now",
   classes:
     "cursor-pointer py-4 px-6 rounded-md text-white bg-custom-orange text-sm",
+  to: "/chat"
+};
+
+const buttonAttributes2 = {
+  text: "See latests post",
+  classes:
+    "cursor-pointer py-4 px-6 rounded-md text-white bg-custom-orange text-sm",
+  to: "/posts"
 };
 
 const counterAttributtes = [
@@ -26,23 +34,22 @@ const counterAttributtes = [
 
 export default function Home() {
   return (
-    <div>
+    <div className="scroll-smooth">
       <LandingPageNavbar />
       <main>
         <div className="sm:px-40 px-8">
           <Banner />
         </div>
 
-        <div className="sm:px-40 px-8">
+        <div className="sm:px-40 px-8" id="features">
           <Features />
         </div>
 
-        <div className="sm:px-40 px-8 bg-bg-light">
+        <div className="sm:px-40 px-8 bg-bg-light" id="about">
           <SectionContainer
             title="Collaborate and <br /> share organizationnal knowledge"
             description="Our platform streamlines the exchange of knowledge, fostering innovation, and enhancing productivity across your organization."
             mockupImg={learn}
-            reversed
           />
         </div>
 
@@ -52,20 +59,21 @@ export default function Home() {
             description="Enhance the educational experience with instant communication. Our app enables real-time chatting between teachers and classmates, promoting interactive discussions, quick question-and-answer sessions, and personalized support."
             button={buttonAttributes}
             mockupImg={message_2}
+            reversed
           />
         </div>
 
         <div className="sm:px-40 px-8 bg-bg-light">
           <SectionContainer
             title="Knowledge Exchange and Q&A Forums"
-            description="Create custom landing pages with Rareblocks that converts more visitors than any website. With lots of unique blocks easily build a page. There are many variations of passages of available. "
+            description="Ask questions, get feedbacks and answers from your peers and teachers. Contribute to your community to improve and ease the learning cursus for your classmates and yourself."
             mockupImg={message_1}
-            reversed
-            counter={counterAttributtes}
+            button={buttonAttributes2}
+            // counter={counterAttributtes}
           />
         </div>
 
-    //     {/* <Testimonials /> */}
+         {/* <Testimonials /> */}
 
         <div className="sm:px-40 px-8">
           <Cta />

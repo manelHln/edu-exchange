@@ -1,4 +1,4 @@
-package org.project.backapi.dto;
+package org.project.backapi.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

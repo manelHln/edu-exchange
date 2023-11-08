@@ -1,23 +1,28 @@
 import React from "react";
 import FeatureCard from "./FeatureCard";
-import { video, safe, time } from "@/assets/images";
 import { montserrat } from "@/utils/fonts";
 
 const features = [
   {
     title: "Ask Questions",
-    icon: video,
+    icon: "help-circle",
     desc: "Don't understand a concept? Have a problem? Ask, and you'll receive quick responses from your peers or teachers.",
+    bg: "bg-orange-100",
+    color: "text-orange-400"
   },
   {
     title: "Share Your Knowledge",
-    icon: time,
+    icon: "book-open",
     desc: "Showcase your expertise by helping your classmates, rating the most helpful answers, and building your reputation as an active learner.",
+    bg: "bg-green-100",
+    color: "text-green-400"
   },
   {
     title: "Learn Together",
-    icon: safe,
+    icon: "graduation-cap",
     desc: "Collaborate on exercises, share resources, and develop your skills through a knowledge-sharing community.",
+    bg: "bg-orange-100",
+    color: "text-orange-400"
   },
 ];
 
@@ -43,6 +48,8 @@ const Features = () => {
             title={e.title}
             description={e.desc}
             icon={e.icon}
+            bg={e.bg}
+            color={e.color}
           />
         ))}
       </div>

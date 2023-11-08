@@ -10,6 +10,7 @@ const Cta = () => {
       <Button
         text="Start chatting now"
         className="cursor-pointer py-3 px-6 rounded-md text-white bg-custom-orange text-sm flex items-center gap-2"
+        to="/chat"
       />
     </div>
   );

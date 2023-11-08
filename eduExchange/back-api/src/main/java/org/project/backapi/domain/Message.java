@@ -21,7 +21,7 @@ public class Message {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "TEXT", updatable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @CreatedDate
@@ -29,7 +29,6 @@ public class Message {
     private Instant createdAt;
 
     @LastModifiedDate
-    @Column(nullable = false)
     private Instant updatedAt;
 
     @ElementCollection
@@ -37,10 +36,14 @@ public class Message {
     @Column(name = "image_paths", nullable = true)
     private List<String> imagePaths;
 
+<<<<<<< HEAD
     // relations
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id")
     private User sender;
+=======
+    //relations
+>>>>>>> c4ad93a4656b1e29652b5749d4e6540ddd33b357
 
     // message belongs to a single conversation
     @ManyToOne

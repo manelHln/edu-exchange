@@ -73,10 +73,6 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Conversation> receivedConversations;
 
-    @OneToMany(mappedBy = "sender")
-    @ToString.Exclude
-    private Set<Message> messages;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(userRole.name()));

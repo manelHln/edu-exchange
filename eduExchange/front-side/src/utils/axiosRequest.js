@@ -7,7 +7,7 @@ const axiosRequest = axios.create({
 });
 
 if (typeof window !== "undefined" && window.localStorage) {
-  const token = localStorage.getItem("keepit_access_token");
+  const token = localStorage.getItem("edu_exchange_access_token");
   if (token) {
     axiosRequest.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }

@@ -3,8 +3,11 @@ import { Plus, MessagesSquare, MessageCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useUserInfoStore } from "@/store/userInfoStore";
 
 const PostPageNavbar = () => {
+  const userinfo = useUserInfoStore((state)=> state.userInfo)
+  
   return (
     <div className="flex justify-between items-center sticky top-0 z-10 px-4 py-2 bg-white">
       <div>
@@ -35,8 +38,8 @@ const PostPageNavbar = () => {
           </Avatar>
 
           <div className="flex flex-col">
-            <p className="text-xs font-semibold">Edward Newgate</p>
-            <p className="text-xs text-slate-500">@whitebeard</p>
+            <p className="text-xs font-semibold">{userinfo?.fullname}</p>
+            <p className="text-xs text-slate-500">{userinfo?.pseudo}</p>
           </div>
         </div>
       </div>

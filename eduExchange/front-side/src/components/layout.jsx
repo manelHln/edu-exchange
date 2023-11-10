@@ -8,22 +8,18 @@ const Layout = ({ children }) => {
 
   const router = useRouter();
   const fetchUserInfo = useUserInfoStore((state)=> state.fetchUserInfo)
+  const userInfo = useUserInfoStore((state)=> state.userInfo)
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("edu_exchange_access_token");
-  //   if (!token) {
-  //     router.push("/login");
-  //     return
-  //   } else {
-  //     fetchUserInfo()
-  //     router.push("/posts");
-  //   }
-  // }, []);
-
-
-  // useEffect(()=>{
-  //   return <LoadingEffect />
-  // }, [])
+  useEffect(() => {
+    const token = localStorage.getItem("edu_exchange_access_token");
+    if (!token) {
+      router.push("/login");
+      return
+    } else {
+      fetchUserInfo()
+      // router.push("/posts");
+    }
+  }, []);
 
 
   return (

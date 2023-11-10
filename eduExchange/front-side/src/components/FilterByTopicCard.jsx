@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
+import axiosRequest from "@/utils/axiosRequest";
 import { Badge } from "@/components/ui/badge";
 import CustomBadge from "./CustomBadge";
 
-const topics = ["Java", "Spring boot", "Programming", "Spring security"];
+// const topics = ["Java", "Spring boot", "Programming", "Spring security"];
 
 const colors = [
   "bg-blue-500",
@@ -12,34 +14,21 @@ const colors = [
   "bg-yellow-500",
 ];
 
-// const colors = [
-//   {
-//     bg: "bg-blue-100",
-//     text: "text-blue-400",
-//   },
-//   {
-//     bg: "bg-red-100",
-//     text: "text-red-400",
-//   },
-//   {
-//     bg: "bg-green-100",
-//     text: "text-green-400",
-//   },
-//   {
-//     bg: "bg-orange-100",
-//     text: "text-orange-400",
-//   },
-//   {
-//     bg: "bg-purple-100",
-//     text: "text-purple-400",
-//   },
-//   {
-//     bg: "bg-yellow-100",
-//     text: "text-yellow-400",
-//   },
-// ];
+const FilterByTopicCard = ({ handleFilter }) => {
+  const [topics, setTopics] = useState(null);
 
-const FilterByTopicCard = () => {
+  useEffect(() => {
+    axiosRequest
+      .get("/topics")
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res.data);
+          setTopics(res.data?.content);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col w-full bg-white rounded-sm border border-slate-300 min-h-[100px]">
@@ -47,18 +36,16 @@ const FilterByTopicCard = () => {
           Filter by topic
         </div>
         <div className="flex flex-wrap gap-2 p-4">
-          {topics.map((e, i) => {
+          {topics?.map((e, i) => {
             const randint = Math.floor(Math.random() * colors.length);
             return (
-                <Badge key={`${e}-${i}`} className={`${colors[randint]} hover:${colors[randint]} p-2 cursor-pointer hover:opacity-80`}>
-                  {e}
-                </Badge>
-            //   <CustomBadge
-            //     key={`${e}-${i}`}
-            //     content={e}
-            //     textColor={colors[randint].text}
-            //     bgColor={colors[randint].bg}
-            //   />
+              <Badge
+                key={`${e?.name}-${i}`}
+                className={`${colors[randint]} hover:${colors[randint]} p-2 cursor-pointer hover:opacity-80`}
+                onClick={() => handleFilter(e?.name)}
+              >
+                {e?.name}
+              </Badge>
             );
           })}
         </div>

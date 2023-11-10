@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PostCard from "@/components/PostCard";
 import PostPageNavbar from "@/components/PostPageNavbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,10 +11,25 @@ import Icon from "@/components/Icon";
 import PostRuleCard from "@/components/PostRuleCard";
 import FilterByTopicCard from "@/components/FilterByTopicCard";
 import TeachersListCard from "@/components/TeachersListCard";
+import axiosRequest from "@/utils/axiosRequest";
+import { useToast } from "@/components/ui/use-toast";
+import globalStore from "@/store/globalStore";
 
 const index = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOPen] = useState(false);
+  const shouldRefetchData = globalStore((state) => state.shouldRefetchData);
+  const setShouldRefetchData = globalStore(
+    (state) => state.setShouldRefetchData
+  );
+  const [page, setPage] = useState(0);
+  const [posts, setPosts] = useState([]);
+  const [totalPages, setTotalPages] = useState(null);
+  const itemsPerPage = 10;
+
   const fileUploadInputRef = useRef(null);
+
+  const { toast } = useToast();
 
   const closeModal = () => setIsModalOPen(false);
 
@@ -23,8 +38,76 @@ const index = () => {
       fileUploadInputRef.current.click();
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    setIsLoading(true);
+    axiosRequest
+      .get(`/posts?page=${page}&size=${itemsPerPage}`)
+      .then((res) => {
+        if (res.status === 200) {
+          const { content, totalPages } = res.data;
+          setPosts((prev) => [...prev, ...content]);
+          setTotalPages(totalPages);
+          if (page < totalPages) {
+            setPage((prev) => prev + 1);
+          }
+        }
+      })
+      .catch((err) =>
+        toast({
+          title: "OOps",
+          description: err.message,
+          variant: "destructive",
+        })
+      )
+      .finally(() => {
+        setIsLoading(false);
+        setShouldRefetchData(false);
+      });
+  };
+
+  const fetchByFilter = (filter) => {
+    axiosRequest
+      .get(`/topics/${filter}`)
+      .then((res) => setPosts(res?.data?.content))
+      .catch((err) => {
+        toast({
+          title: "Opps",
+          variant: "destructive",
+          description: err.message,
+        });
+      });
+  };
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 200 &&
+      !isLoading &&
+      page < totalPages
+    ) {
+      fetchData();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (!shouldRefetchData) {
+      return;
+    }
+    fetchData();
+  }, [shouldRefetchData]);
+
   return (
-    <div className="bg-slate-200 min-h-screen">
+    <div className="bg-slate-200 min-h-screen pb-10">
       <PostPageNavbar />
       <main className="px-8 sm:px-40 flex gap-8">
         <div className="flex flex-col flex-wrap gap-4 mt-4 w-2/3">
@@ -46,7 +129,9 @@ const index = () => {
                       className="flex justify-start items-center rounded-sm w-full text-slate-400 px-4"
                       onClick={() => setIsModalOPen(true)}
                       variant="outline"
-                    >Create Post</Button>
+                    >
+                      Create Post
+                    </Button>
                   </div>
                 }
                 description="Create a new post"
@@ -68,23 +153,19 @@ const index = () => {
               {/* <Link size={20} className="cursor-pointer" /> */}
             </div>
           </div>
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
+
+          {posts?.length < 1 && <p>Oops no posts found</p>}
+
+          {posts?.map((e, i) => {
+            return <PostCard key={i} data={e} />;
+          })}
         </div>
 
         <div className="mt-4 flex flex-col flex-1 gap-4">
+          <FilterByTopicCard handleFilter={fetchByFilter} />
           <PostRuleCard />
-          <FilterByTopicCard />
           <CreatePostCard />
-          <TeachersListCard />
+          {/* <TeachersListCard /> */}
         </div>
       </main>
     </div>

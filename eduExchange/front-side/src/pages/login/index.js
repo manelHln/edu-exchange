@@ -5,6 +5,8 @@ import Icon from "@/components/Icon";
 import InputWithLabel from "@/components/InputWithLabel";
 import Button from "@/components/Button";
 import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const inputClassname =
   "block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 border-none focus:ring-1 focus:outline-custom-orange sm:text-sm sm:leading-6";
@@ -12,19 +14,50 @@ const inputClassname =
 export default function LoginPage() {
   const [passwordView, setPasswordView] = useState(true);
   const { toast } = useToast();
-
+  const router = useRouter();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formdata = new FormData(e.target);
-    const jsonData = {};
-    for (let value of formdata.entries()) {
-      Object.assign(jsonData, { [value[0]]: value[1] });
-    }
-    toast({
-      variant: "success",
-      description: "Successfully logged in!",
-    });
+    // const jsonData = {};
+    // for (let value of formdata.entries()) {
+    //   Object.assign(jsonData, { [value[0]]: value[1] });
+    // }
+    const jsonData = Array.from(formdata.entries()).reduce(
+      (acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      },
+      {}
+    );
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/login`, jsonData)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          toast({
+            variant: "primary",
+            description: "Successfully logged in, now redirecting",
+          });
+
+          localStorage.setItem("edu_exchange_access_token", res.data.token);
+          router.push("/posts");
+        }
+      })
+      .catch((err) => {
+        if (err.message.includes("403")) {
+          toast({
+            variant: "destructive",
+            description: "Username or password incorrect",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            description: err.message,
+          });
+        }
+      });
   };
 
   return (

@@ -83,3 +83,5 @@ export default function Home() {
     </div>
   );
 }
+
+Home.getLayout = ((page)=> page);

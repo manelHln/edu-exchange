@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 public class VoteConverter {
-    public VoteDto convert(Vote vote) {
+    public static VoteDto convert(Vote vote) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(vote, VoteDto.class);
     }

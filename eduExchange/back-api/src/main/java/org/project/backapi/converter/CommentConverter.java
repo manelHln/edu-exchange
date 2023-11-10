@@ -22,6 +22,7 @@ public class CommentConverter {
             dto.setParentId(comment.getParent().getId());
         }
         // dto.setReplies(getReplies(comment));
+        dto.setVotesCount(comment.getVotes().size());
 
         return dto;
     }

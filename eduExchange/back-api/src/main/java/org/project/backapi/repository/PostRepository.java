@@ -3,7 +3,6 @@ package org.project.backapi.repository;
 
 import org.project.backapi.domain.Post;
 import org.project.backapi.domain.Topic;
-import org.project.backapi.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,8 +28,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findByTopicsName(String topicName, Pageable pageable);
 
 
-    Page<Post> findByUserPseudo(String pseudo, Pageable pageable);
-
-    Post findByUser(User currentUser);
+    @Query("SELECT p FROM Post p WHERE (p.title LIKE %:text% OR p.content LIKE %:text%) AND p.visible = true")
+    Page<Post> findByTitleOrContent(String text, Pageable pageable);
 
 }

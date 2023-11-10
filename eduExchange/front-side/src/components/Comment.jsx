@@ -32,7 +32,7 @@ const Comment = ({ data }) => {
         <div className="flex items-center gap-2">
           {/* <Image src={girl_1} alt="User avatar" width={20} height={20} /> */}
           <UserInfoSheet />
-          <p className="text-sm">Edward Newgate</p>
+          <p className="text-sm">Posted by {data.authorId}</p>
           {/* <span className="text-slate-400 text-xs">
             12 hours ago
           </span> */}

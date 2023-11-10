@@ -19,4 +19,6 @@ public class CommentDto {
     private Long postId;
     private Long parentId;
     private List<CommentDto> replies;
+    private int votesCount;
+
 }

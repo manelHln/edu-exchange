@@ -26,4 +26,8 @@ public class PostDto {
     private Instant updatedAt;
     private Boolean hidden;
     private PostStatus status;
+    private int commentsCount;
+    private String userName;
+    private int reportsCount;
+
 }

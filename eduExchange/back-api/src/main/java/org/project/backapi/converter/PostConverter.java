@@ -7,6 +7,7 @@ import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.PostDto;
 import org.project.backapi.enums.PostStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,10 @@ public class PostConverter {
         dto.setUpdatedAt(post.getUpdatedAt());
         dto.setStatus(post.getStatus());
         dto.setHidden(post.getHidden());
+        dto.setCommentsCount(CollectionUtils.isEmpty(post.getComments()) ? 0 : post.getComments().size());
+        dto.setUserName(post.getUser().getUsername());
+        dto.setReportsCount(CollectionUtils.isEmpty(post.getReports()) ? 0 : post.getReports().size());
+
 
         return dto;
     }

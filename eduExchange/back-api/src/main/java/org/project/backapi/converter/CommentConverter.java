@@ -5,6 +5,8 @@ import org.project.backapi.domain.Post;
 import org.project.backapi.domain.User;
 import org.project.backapi.dto.modelsDto.CommentDto;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,8 @@ public class CommentConverter {
             dto.setParentId(comment.getParent().getId());
         }
         // dto.setReplies(getReplies(comment));
+        dto.setVotesCount(CollectionUtils.isEmpty(comment.getVotes()) ? 0 : comment.getVotes().size());
+
 
         return dto;
     }

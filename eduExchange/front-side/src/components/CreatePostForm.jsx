@@ -13,53 +13,47 @@ import TopicsList from "./TopicsList";
 const CreatePostForm = ({ closeModal }) => {
   const { toast } = useToast();
   const userInfo = useUserInfoStore((state) => state.userInfo);
-  const setShouldRefetch = globalStore((state)=> state.setShouldRefetchData)
-  const [topics, setTopics] = useState([""])
+  const setShouldRefetch = globalStore((state) => state.setShouldRefetchData);
+  const [topics, setTopics] = useState([""]);
   const [postTitle, setPostTitle] = useState("");
   const editorRef = React.useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(true){
-    // if (editorRef.current) {
-      // if (!editorRef.current.getContent()) {
-      //   toast({
-      //     title: "OOps",
-      //     description: "Please your post content cannot be empty!!",
-      //     variant: "destructive",
-      //   });
-      //   return;
-      // }
-      // const data = {
-      //   content: editorRef.current.getContent(),
-      //   title: postTitle,
-      //   userId: userInfo.id,
-      //   topicNames: topics,
-      // };
-      const data = {
-        // content: editorRef.current.getContent(),
-        title: postTitle,
-        userId: userInfo.id,
-        topicNames: topics,
-        content: "This is a sample test"
-      };
-      axiosRequest
-        .post("/posts", data)
-        .then((response) => {
-          setShouldRefetch(true);
+    if (true) {
+      if (editorRef.current) {
+        if (!editorRef.current.getContent()) {
           toast({
-            title: "Great!",
-            description: "Post created successfully!",
-          });
-        })
-        .catch((error) => {
-          toast({
-            title: "Oops, something went wrong",
-            description: error.message,
+            title: "OOps",
+            description: "Please your post content cannot be empty!!",
             variant: "destructive",
           });
-        })
-        .finally(() => closeModal());
+          return;
+        }
+        const data = {
+          content: editorRef.current.getContent(),
+          title: postTitle,
+          userId: userInfo.id,
+          topicNames: topics,
+        };
+        axiosRequest
+          .post("/posts", data)
+          .then((response) => {
+            setShouldRefetch(true);
+            toast({
+              title: "Great!",
+              description: "Post created successfully!",
+            });
+          })
+          .catch((error) => {
+            toast({
+              title: "Oops, something went wrong",
+              description: error.message,
+              variant: "destructive",
+            });
+          })
+          .finally(() => closeModal());
+      }
     }
   };
 

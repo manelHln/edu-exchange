@@ -7,6 +7,7 @@ import { useUserInfoStore } from "@/store/userInfoStore";
 import axiosRequest from "@/utils/axiosRequest";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
+import Image from "next/image";
 
 const PostPageNavbar = ({setPosts, disabledSearch}) => {
   const {toast} = useToast()
@@ -34,8 +35,8 @@ const PostPageNavbar = ({setPosts, disabledSearch}) => {
   
   return (
     <div className="flex justify-between items-center sticky top-0 z-10 px-4 py-2 bg-white">
-      <div>
-        <p>.eduExchange</p>
+      <div className="flex">
+        <Image src="/logo.png" width={100} height={60} />
       </div>
       <InputWithIcon
         startIcon={"search"}

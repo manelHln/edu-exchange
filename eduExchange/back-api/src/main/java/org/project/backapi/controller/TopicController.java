@@ -23,7 +23,7 @@ public class TopicController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/{topicName}")
+    @GetMapping("/{topicName}/posts")
     public ResponseEntity<PagedResponse<PostDto>> getTopicPosts(
             @PathVariable String topicName,
             @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,

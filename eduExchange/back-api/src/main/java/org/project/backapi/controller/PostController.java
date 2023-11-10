@@ -72,13 +72,23 @@ public class PostController {
         return new ResponseEntity<>(postService.getAll(page, size,true), HttpStatus.OK);
     }
 
+    @GetMapping("/search/{text}")
+    public ResponseEntity<PagedResponse<PostDto>> searchPostsByContent(
+            @PathVariable String text,
+            @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
+
+        //notice that we only fetch for visible posts
+        return new ResponseEntity<>(postService.getByPostContentOrTitle(page, size,text), HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PagedResponse<PostDto>> readPosts(
             @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
             @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
 
-        //notice that we only fetch visible posts
+        //notice that we fetch posts even hidden ones
         return new ResponseEntity<>(postService.getAll(page, size,false), HttpStatus.OK);
     }
 
@@ -110,6 +120,8 @@ public class PostController {
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+
 
     @PostMapping("/{postId}/reports")
     @PreAuthorize("hasRole('STUDENT')")

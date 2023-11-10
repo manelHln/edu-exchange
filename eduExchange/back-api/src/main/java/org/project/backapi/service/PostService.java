@@ -160,7 +160,7 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         Page<Post> posts;
         if(!onlyVisible) {
-             posts = postRepository.findAll(pageable);
+            posts = postRepository.findAll(pageable);
         } else {
             posts = postRepository.findByHiddenFalse(pageable);
         }
@@ -200,7 +200,7 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "title");
         Topic topic = topicRepository.findByName(topicName)
                 .orElseThrow(() -> new RessourceNotFoundException(String.format("Topic: %s, does not exist", topicName)));
-    
+
         Page<Post> posts = postRepository.findByTopicsName(topicName, pageable);
 
         if (posts.isEmpty()) {
@@ -222,5 +222,18 @@ public class PostService {
         post = postRepository.save(post);
 
         return postConverter.convert(post);
+    }
+
+    public PagedResponse<PostDto> getByPostContentOrTitle(Integer page, Integer size, String text) {
+        AppUtils.validatePageNumberAndSize(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        Page<Post> posts = postRepository.findByTitleOrContent(text, text, pageable);
+
+        if (posts.isEmpty()) {
+            return new PagedResponse<>(Collections.emptyList(), 0, 0, 0, 0, true);
+        }
+        List<PostDto> dtos = postConverter.convert(posts.getContent());
+
+        return new PagedResponse<>(dtos, posts.getNumber(), posts.getSize(), posts.getTotalElements(), posts.getTotalPages(), posts.isLast());
     }
 }

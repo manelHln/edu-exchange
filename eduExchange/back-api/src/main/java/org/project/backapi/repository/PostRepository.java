@@ -18,14 +18,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAll(Pageable pageable);
 
-    /*@Query("SELECT COUNT(p) FROM Post p JOIN p.topic t WHERE t = :topic")
-    Long countByTopics(@Param("topic") Topic topic);/**/
-
     Page<Post> findByTopics(Topic topic, Pageable pageable);
 
     Page<Post> findByHiddenFalse(Pageable pageable);
 
     Page<Post> findByTopicsName(String topicName, Pageable pageable);
 
+    Page<Post> findByTitleOrContent(String title, String content, Pageable pageable);
 
 }

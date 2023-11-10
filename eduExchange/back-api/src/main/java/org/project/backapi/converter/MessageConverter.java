@@ -20,7 +20,7 @@ public class MessageConverter {
         dto.setUpdatedAt(message.getUpdatedAt());
         dto.setAuthorId(message.getConversation().getInitiator().getId());
         dto.setConversationId(message.getConversation().getId());
-
+        dto.setReceiverId(message.getConversation().getReceiver().getId());
         return dto ;
     }
     public Message convert (MessageDto messageDto , Conversation conversation) {

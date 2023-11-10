@@ -43,7 +43,7 @@ public class ConversationController {
 
     }
 
-    @GetMapping("/{conversationId}/{text}")
+    @GetMapping("/{conversationId}/search/{text}/")
     public PagedResponse<MessageDto> searchMessagesInConversation(
             @PathVariable Long conversationId,
             @PathVariable String text,
@@ -56,7 +56,7 @@ public class ConversationController {
         return messageService.searchMessagesInConversation(page, size, conversationId, text, currentUser);
     }
 
-    @GetMapping("/{text}")
+    @GetMapping("/search/{text}")
     public PagedResponse<ConversationDto> searchConversationsByContent(
             @PathVariable String text,
             @RequestParam(name = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,

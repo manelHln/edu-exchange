@@ -21,7 +21,7 @@ export default function RegisterPage() {
   const [passwordView, setPasswordView] = useState(true);
   return (
     <>
-      <div className="flex align-middle flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-custom-orange w-screen h-screen">
+      <div className="flex align-middle flex-1 flex-col justify-center px-6 py-12 lg:px-8 w-screen h-screen" style={{backgroundImage: `url("bgimg.png")`}}>
         <div className=" ">
           <div className=" sm:mx-auto sm:w-full sm:max-w-sm shadow-lg px-10  py-8 rounded-xl bg-white">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm ">

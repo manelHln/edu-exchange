@@ -9,24 +9,16 @@ import TimeAgo from "timeago-react";
 const PostCard = ({ data }) => {
   const userinfo = useUserInfoStore((state) => state.userInfo);
 
-  const handleUpvote = () => {
-
-  }
-
-  const handleDownVote = () => {
-
-  }
-
 
 
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 w-full bg-white rounded-sm border border-slate-300">
-      <div className="text-slate-500 flex flex-col items-center h-full bg-slate-50 p-2">
+    <div className="flex flex-col sm:flex-row gap-3 w-full bg-white rounded-sm border border-slate-300 p-3">
+      {/* <div className="text-slate-500 flex flex-col items-center h-full bg-slate-50 p-2">
         <ThumbsUp className="cursor-pointer text-blue-500" />
         <span className="my-2">23</span>
         <ThumbsDown className="cursor-pointer text-red-500" />
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-2 py-2">
         <div className="flex items-center gap-2">

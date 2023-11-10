@@ -24,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -191,6 +192,11 @@ public class PostController {
             @RequestParam(name = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size) {
 
         return new ResponseEntity<>(postService.getUserPosts(userPseudo, page, size), HttpStatus.OK);
+    }
+
+    @GetMapping("search")
+    public ResponseEntity<List<PostDto>> search(@RequestParam String q){
+        return new ResponseEntity<>(postService.search(q), HttpStatus.OK);
     }
 
 }

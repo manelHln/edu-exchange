@@ -103,12 +103,13 @@ const index = () => {
     if (!shouldRefetchData) {
       return;
     }
+    setPage(0)
     fetchData();
   }, [shouldRefetchData]);
 
   return (
     <div className="bg-slate-200 min-h-screen pb-10">
-      <PostPageNavbar />
+      <PostPageNavbar setPosts={setPosts} />
       <main className="px-8 sm:px-40 flex gap-8">
         <div className="flex flex-col flex-wrap gap-4 mt-4 w-2/3">
           <div className="flex items-center gap-2 p-2 bg-white rounded-sm border border-slate-300">

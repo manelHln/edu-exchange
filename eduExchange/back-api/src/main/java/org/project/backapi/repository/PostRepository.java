@@ -26,4 +26,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findByTitleOrContent(String title, String content, Pageable pageable);
 
+    @Query("SELECT p FROM Post p WHERE p.title ILIKE ?1 OR p.content ILIKE ?1")
+    List<Post> searchPost(String query);
+
 }

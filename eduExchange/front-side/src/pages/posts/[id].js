@@ -112,7 +112,7 @@ const SinglePostPage = () => {
 
   return (
     <div className="bg-slate-200 min-h-screen">
-      <PostPageNavbar />
+      <PostPageNavbar disabledSearch />
       <main className="px-8 sm:px-52 py-10 flex gap-8">
         <div className="flex flex-col sm:flex-row gap-3 w-full bg-white rounded-sm border border-slate-300 pb-8">
           <div className="text-slate-500 flex flex-col items-center h-full bg-slate-50 p-2">

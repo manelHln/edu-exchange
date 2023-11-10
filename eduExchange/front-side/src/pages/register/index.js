@@ -3,25 +3,82 @@ import { useState } from "react";
 import { montserrat, dm_sans } from "@/utils/fonts";
 import InputWithLabel from "@/components/InputWithLabel";
 import Button from "@/components/Button";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 import Icon from "@/components/Icon";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button as Button2 } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const inputClassname =
   "block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 border-none focus:ring-1 focus:outline-custom-orange sm:text-sm sm:leading-6";
 
-const handleFormSubmit = (e) => {
-  e.preventDefault();
-  const formdata = new FormData(e.target);
-  const jsonData= {}
-  for(let value of formdata.entries()){
-    Object.assign(jsonData, {[value[0]]: value[1]})
-  }
-};
+const roles = [
+  {
+    value: "STUDENT",
+    label: "STUDENT",
+  },
+  {
+    value: "TEACHER",
+    label: "TEACHER",
+  },
+];
 
 export default function RegisterPage() {
   const [passwordView, setPasswordView] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const {toast} = useToast()
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formdata = new FormData(e.target);
+    const jsonData = Array.from(formdata.entries()).reduce(
+      (acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      },
+      {}
+    );
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/register`, jsonData)
+      .then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          toast({
+            variant: "primary",
+            description: "Successfully created user",
+          });
+          // localStorage.setItem("edu_exchange_access_token", res.data.token);
+        }
+      })
+      .catch((err) => {
+        toast({
+          variant: "destructive",
+          description: err.message,
+        });
+      });
+  };
+
   return (
     <>
-      <div className="flex align-middle flex-1 flex-col justify-center px-6 py-12 lg:px-8 w-screen h-screen" style={{backgroundImage: `url("bgimg.png")`}}>
+      <div
+        className="flex align-middle flex-1 flex-col justify-center px-6 py-12 lg:px-8 w-screen h-screen"
+        style={{ backgroundImage: `url("bgimg.png")` }}
+      >
         <div className=" ">
           <div className=" sm:mx-auto sm:w-full sm:max-w-sm shadow-lg px-10  py-8 rounded-xl bg-white">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
@@ -33,7 +90,7 @@ export default function RegisterPage() {
               <p
                 className={`px-8 mt-3 mb-5 text-sm text-center font-[500] ${montserrat.className}`}
               >
-                Fill in your details to get started!!
+                Fill in the details of the user to get started!!
               </p>
             </div>
             <form className="space-y-6" onSubmit={handleFormSubmit}>
@@ -60,15 +117,59 @@ export default function RegisterPage() {
                 required
               />
               <InputWithLabel
-                id="pseudo"
+                id="role"
                 type="text"
-                label="Your pseudo"
+                label="Set the user role"
                 className={inputClassname}
-                name="pseudo"
-                htmlFor="pseudo"
-                placeholder="_datboii.mowgli"
+                name="role"
+                htmlFor="role"
+                placeholder="TEACHER | STUDENT"
                 required
               />
+
+              {/* <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button2
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-full justify-between"
+                  >
+                    {value
+                      ? roles.find((role) => role.value === value)?.label
+                      : "New"}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button2>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Search user..." />
+                    <CommandEmpty>Not found.</CommandEmpty>
+                    <CommandGroup>
+                      {roles?.map((role) => (
+                        <CommandItem
+                          key={role.label}
+                          value={role.value}
+                          onSelect={(currentValue) => {
+                            setValue(
+                              currentValue === value ? "" : currentValue
+                            );
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              value === role.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {role.value}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover> */}
 
               <div>
                 <label

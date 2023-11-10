@@ -20,22 +20,29 @@ const CreatePostForm = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editorRef.current) {
-      if (!editorRef.current.getContent()) {
-        toast({
-          title: "OOps",
-          description: "Please your post content cannot be empty!!",
-          variant: "destructive",
-        });
-        return;
-      }
+    if(true){
+    // if (editorRef.current) {
+      // if (!editorRef.current.getContent()) {
+      //   toast({
+      //     title: "OOps",
+      //     description: "Please your post content cannot be empty!!",
+      //     variant: "destructive",
+      //   });
+      //   return;
+      // }
+      // const data = {
+      //   content: editorRef.current.getContent(),
+      //   title: postTitle,
+      //   userId: userInfo.id,
+      //   topicNames: topics,
+      // };
       const data = {
-        content: editorRef.current.getContent(),
+        // content: editorRef.current.getContent(),
         title: postTitle,
         userId: userInfo.id,
         topicNames: topics,
+        content: "This is a sample test"
       };
-
       axiosRequest
         .post("/posts", data)
         .then((response) => {

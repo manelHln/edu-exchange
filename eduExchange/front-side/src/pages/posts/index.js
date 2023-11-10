@@ -72,7 +72,7 @@ const index = () => {
 
   const fetchByFilter = (filter) => {
     axiosRequest
-      .get(`/topics/${filter}`)
+      .get(`/topics/${filter}/posts`)
       .then((res) => setPosts(res?.data?.content))
       .catch((err) => {
         toast({

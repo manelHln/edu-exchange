@@ -34,7 +34,7 @@ const PostCard = ({ data }) => {
             {data?.topicNames.join(" - ")}
           </p>
           <span className="text-slate-400 text-xs">
-            Posted by John Doe <TimeAgo datetime={data?.createdAt} />
+            Posted by {data?.fullname} <TimeAgo datetime={data?.createdAt} />
           </span>
         </div>
 

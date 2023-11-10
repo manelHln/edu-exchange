@@ -27,7 +27,7 @@ public class PostDto {
     private Boolean hidden;
     private PostStatus status;
     private int commentsCount;
-    private String userName;
+    private String fullname;
     private int reportsCount;
 
 }

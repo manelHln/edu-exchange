@@ -28,7 +28,7 @@ public class PostConverter {
         dto.setStatus(post.getStatus());
         dto.setHidden(post.getHidden());
         dto.setCommentsCount(CollectionUtils.isEmpty(post.getComments()) ? 0 : post.getComments().size());
-        dto.setUserName(post.getUser().getUsername());
+        dto.setFullname(post.getUser().getFullname());
         dto.setReportsCount(CollectionUtils.isEmpty(post.getReports()) ? 0 : post.getReports().size());
 
 

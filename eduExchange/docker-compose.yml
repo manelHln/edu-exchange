@@ -1,28 +1,5 @@
 version: "3.9"
 services:
-  frontend:
-    build:
-      context: ./front-side
-      dockerfile: Dockerfile
-    container_name: edu-front
-    ports:
-      - "3000:3000"
-
-    # attention le chargement du front est très lent
-    # soyez patients pour l'installation des dépendances
-
-  db:
-    image: postgres
-    container_name: db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=edu-database
-      - PGDATA=/data/postgres
-    volumes:
-      - ../edu-data:/data/postgres
-    ports:
-      - 5432:5432
 
   backend:
     build:
@@ -31,12 +8,8 @@ services:
     container_name: edu-back
     ports:
       - "9898:9898"
-    depends_on:
-      - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/edu-database
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ep-dry-math-96130912.us-east-2.aws.neon.tech/edu-db?user=akotchifo-mick&password=4UHjk8gQxODX&sslmode=require
       - SPRING_DATASOURCE_DRIVER-CLASS= org.postgresql.Driver
 
 # Créer les images Docker

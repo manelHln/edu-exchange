@@ -1,28 +1,45 @@
 version: "3.9"
 services:
 
-  backend:
+  edu_exchange_backend:
     build:
-      context: ./back-api
+      context: ./api
       dockerfile: Dockerfile
-    container_name: edu-back
+    container_name: edu_exchange_api
     ports:
       - "9898:9898"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ep-dry-math-96130912.us-east-2.aws.neon.tech/edu-db?user=akotchifo-mick&password=4UHjk8gQxODX&sslmode=require
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://edu_exchange_database:5432/edu_exchange_db
       - SPRING_DATASOURCE_DRIVER-CLASS= org.postgresql.Driver
+    networks:
+      - edu_exchange_network
 
-# Créer les images Docker
-#docker-compose build
+  edu_exchange_frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: edu_exchange_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/edu_exchange_frontend_volume
+      - ./edu_exchange_frontend_volume/node_modules
+    networks:
+      - edu_exchange_network
 
-# Démarrer les conteneurs
-#docker-compose up -d
+  edu_exchange_database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: edu_exchange_db
+      POSTGRES_PASSWORD: gangbang
+      POSTGRES_USER: edu_db_user
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./edu_exchange_db_volume/postgres
+    networks:
+      - edu_exchange_network
 
-# Arrêter les conteneurs
-#docker-compose down -v
-
-# Supprimer les conteneurs
-#docker-compose rm
-
-# Supprimer les images Docker
-#docker-compose rmi
+networks:
+  edu_exchange_network:
+    driver: bridge
